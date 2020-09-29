@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 #if UNITY_EDITOR
-using UnityEditor;
 
 
 #endif
-namespace MotionAI.GameHub {
+namespace GamehubPlugin.Util {
 // Author: JohannesMP (2018-08-12)
 //
 // A wrapper that provides the means to safely serialize Scene Asset References.

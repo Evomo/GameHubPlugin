@@ -1,8 +1,8 @@
-﻿using System;
+﻿using GamehubPlugin.Util;
 using UnityEditor;
 using UnityEngine;
 
-namespace MotionAI.GameHub {
+namespace GamehubPlugin {
 	public class GameLauncherData {
 		public SceneReference mainSceneReference;
 		public string gameName;
@@ -20,27 +20,13 @@ namespace MotionAI.GameHub {
 
 
 #if UNITY_EDITOR
-		
 		[MenuItem("Evomo/Gamehub/Create Game Asset")]
 		public static void CreateSceneObjects() {
-			GameHubGame gs = ScriptableObject.CreateInstance<GameHubGame>();
+			GameHubGame gs = CreateInstance<GameHubGame>();
 			gs.gameName = Application.productName;
-
 			AssetDatabase.CreateAsset(gs, $"Assets/{gs.gameName}.asset");
-
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
-		}
-		private void OnEnable() {
-			try {
-				TextureImporter ti = (TextureImporter) AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(image));
-
-				ti.npotScale = TextureImporterNPOTScale.None;
-				ti.isReadable = true;
-			}
-			catch (NullReferenceException) {
-				
-			}
 		}
 #endif
 
