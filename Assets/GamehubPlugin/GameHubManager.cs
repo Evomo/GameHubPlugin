@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 namespace GamehubPlugin {
 	public class GameHubManager : Singleton<GameHubManager> {
 		private SceneReference _loadedScene;
-		public GameObject currentlyRunningGame;
+
 
 
 		private MotionAIManager CurrentManager;
@@ -27,7 +27,7 @@ namespace GamehubPlugin {
 
 
 		public void EndSession(float score = 0) {
-			if (currSess != null ) {
+			if (currSess != null) {
 				currSess?.EndSession(score);
 				Debug.Log(currSess.ToString());
 				//TODO send to native sdk 
@@ -46,11 +46,10 @@ namespace GamehubPlugin {
 			}
 		}
 
+
 		public void UnloadScene() {
-			if (currentlyRunningGame != null) {
-				if (_loadedScene != null) {
-					StartCoroutine(UnloadGame());
-				}
+			if (_loadedScene != null) {
+				StartCoroutine(UnloadGame());
 			}
 			else {
 				Debug.Log("Would now return to the Gamehub");
@@ -62,9 +61,7 @@ namespace GamehubPlugin {
 			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
 			yield return new WaitUntil(() => asyncLoad.isDone);
 
-			if (currentlyRunningGame != null) {
-				currentlyRunningGame.SetActive(false);
-			}
+	
 
 			SceneManager.SetActiveScene(SceneManager.GetSceneByPath(scene.ScenePath));
 			_loadedScene = scene;
@@ -77,7 +74,6 @@ namespace GamehubPlugin {
 			AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 			yield return new WaitUntil(() => asyncLoad.isDone);
 			_loadedScene = null;
-			currentlyRunningGame.SetActive(true);
 		}
 
 		#endregion
