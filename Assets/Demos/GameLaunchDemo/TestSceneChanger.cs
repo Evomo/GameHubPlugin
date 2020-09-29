@@ -1,4 +1,5 @@
-﻿using MotionAI.GameHub;
+﻿using GamehubPlugin;
+using GamehubPlugin.Util;
 using UnityEngine;
 
 namespace Demos.GameLaunchDemo {

@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using DataStructures;
+﻿using System.Collections;
+using GamehubPlugin.Util;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace MotionAI.GameHub {
+namespace GamehubPlugin {
 	public class GameHubManager : Singleton<GameHubManager> {
-//		public Animator transition;
-
-
 		private SceneReference _loadedScene;
+		public GameObject currentlyRunningGame;
 
 
-		public GameObject uiCanvas;
+		#region Scene Loading
 
 		public void LoadGameScene(SceneReference scene) {
 			if (_loadedScene == null) {
@@ -22,7 +18,7 @@ namespace MotionAI.GameHub {
 		}
 
 		public void UnloadScene() {
-			if (uiCanvas != null) {
+			if (currentlyRunningGame != null) {
 				if (_loadedScene != null) {
 					StartCoroutine(UnloadGame());
 				}
@@ -37,8 +33,8 @@ namespace MotionAI.GameHub {
 			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
 			yield return new WaitUntil(() => asyncLoad.isDone);
 
-			if (uiCanvas != null) {
-				uiCanvas.SetActive(false);
+			if (currentlyRunningGame != null) {
+				currentlyRunningGame.SetActive(false);
 			}
 
 			SceneManager.SetActiveScene(SceneManager.GetSceneByPath(scene.ScenePath));
@@ -52,7 +48,9 @@ namespace MotionAI.GameHub {
 			AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 			yield return new WaitUntil(() => asyncLoad.isDone);
 			_loadedScene = null;
-			uiCanvas.SetActive(true);
+			currentlyRunningGame.SetActive(true);
 		}
+
+		#endregion
 	}
 }

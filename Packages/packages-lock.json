@@ -1,70 +1,24 @@
 {
   "dependencies": {
-    "com.unity.2d.animation": {
-      "version": "4.2.2",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.2d.common": "3.0.0",
-        "com.unity.mathematics": "1.1.0",
-        "com.unity.2d.sprite": "1.0.0",
-        "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.uielements": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.2d.common": {
-      "version": "3.0.0",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.2d.sprite": "1.0.0",
-        "com.unity.modules.uielements": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.2d.path": {
-      "version": "3.0.1",
-      "depth": 1,
-      "source": "registry",
+    "com.coffee.upm-git-extension": {
+      "version": "https://github.com/mob-sakai/UpmGitExtension.git",
+      "depth": 0,
+      "source": "git",
       "dependencies": {},
-      "url": "https://packages.unity.com"
+      "hash": "314846d68c45684a9a82b76fae4892c4992fecd7"
     },
-    "com.unity.2d.pixel-perfect": {
-      "version": "3.0.2",
+    "com.evomo.motionai": {
+      "version": "file:Z:/Coding/Evomo/unityMotionAIPlugin",
       "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.2d.psdimporter": {
-      "version": "3.1.4",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.2d.common": "3.0.0",
-        "com.unity.2d.animation": "4.2.2",
-        "com.unity.2d.sprite": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.2d.sprite": {
-      "version": "1.0.0",
-      "depth": 0,
-      "source": "builtin",
+      "source": "local",
       "dependencies": {}
     },
-    "com.unity.2d.spriteshape": {
-      "version": "4.1.2",
+    "com.solidalloy.type.references": {
+      "version": "git+https://github.com/SolidAlloy/ClassTypeReference-for-Unity#master",
       "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.mathematics": "1.1.0",
-        "com.unity.2d.common": "3.0.0",
-        "com.unity.2d.path": "3.0.1",
-        "com.unity.modules.physics2d": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
+      "source": "git",
+      "dependencies": {},
+      "hash": "64d7bf593c1beb734f374a184ccc7fc837e322b0"
     },
     "com.unity.2d.tilemap": {
       "version": "1.0.0",
@@ -123,13 +77,6 @@
     "com.unity.ide.vscode": {
       "version": "1.2.1",
       "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.mathematics": {
-      "version": "1.1.0",
-      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
