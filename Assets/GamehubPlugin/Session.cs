@@ -12,15 +12,16 @@ namespace GamehubPlugin {
 		public string name;
 		public float score;
 		public double duration;
-		public List<RecordedMovement> movements;
+		public RecordedMovement[] movements;
+		public long timestamp;
 
 
 		private Dictionary<MovementEnum, RecordedMovement> _mvDict;
 
 		public Session(string gameName) {
 			_mvDict = new Dictionary<MovementEnum, RecordedMovement>();
-			movements = new List<RecordedMovement>();
 			StartTime = DateTime.Now;
+			timestamp = ((DateTimeOffset)StartTime).ToUnixTimeSeconds();
 			name = gameName;
 		}
 
@@ -31,10 +32,12 @@ namespace GamehubPlugin {
 		public void EndSession(float sessionScore) {
 			duration = (DateTime.Now - StartTime).TotalSeconds;
 			score = sessionScore;
-			movements = _mvDict.Values.ToList();
+			Debug.Log(_mvDict.Values.ToArray());
+			movements = _mvDict.Values.ToArray();
 		}
 
 		public void RecordMovement(MovementDto m) {
+			Debug.Log("recording");
 			RecordedMovement rm;
 			if (!_mvDict.TryGetValue(m.typeID, out rm)) {
 				rm = new RecordedMovement(m.typeID);

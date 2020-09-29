@@ -27,12 +27,13 @@ namespace GamehubPlugin {
 
 
 		public void EndSession(float score = 0) {
-			currSess?.EndSession(score);
-			
-			//TODO send to native sdk 
+			if (currSess != null ) {
+				currSess?.EndSession(score);
+				Debug.Log(currSess.ToString());
+				//TODO send to native sdk 
+			}
 
-
-			currSess = null; 
+			currSess = null;
 		}
 
 		#endregion
