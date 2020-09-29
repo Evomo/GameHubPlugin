@@ -1,5 +1,10 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using GamehubPlugin.Util;
+using MotionAI.Core;
+using MotionAI.Core.Controller;
+using MotionAI.Core.POCO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +13,29 @@ namespace GamehubPlugin {
 		private SceneReference _loadedScene;
 		public GameObject currentlyRunningGame;
 
+
+		private MotionAIManager CurrentManager;
+		private Session currSess;
+
+		#region Session Handle
+
+		public void StartSession(string gameName) {
+			CurrentManager = FindObjectOfType<MotionAIManager>();
+			currSess = new Session(gameName);
+			CurrentManager.controllerManager.onMovement.AddListener(currSess.RecordMovement);
+		}
+
+
+		public void EndSession(float score = 0) {
+			currSess?.EndSession(score);
+			
+			//TODO send to native sdk 
+
+
+			currSess = null; 
+		}
+
+		#endregion
 
 		#region Scene Loading
 
