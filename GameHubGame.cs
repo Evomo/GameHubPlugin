@@ -10,7 +10,6 @@ namespace GamehubPlugin {
 		public string description;
 		public string developerName;
 
-
 #if UNITY_EDITOR
 		[MenuItem("Evomo/Gamehub/Create Game Asset")]
 		public static void CreateGameHubGame() {
