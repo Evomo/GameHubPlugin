@@ -8,10 +8,11 @@
       "hash": "314846d68c45684a9a82b76fae4892c4992fecd7"
     },
     "com.evomo.motionai": {
-      "version": "file:Z:/Coding/Evomo/unityMotionAIPlugin",
+      "version": "0.1.0",
       "depth": 0,
-      "source": "local",
-      "dependencies": {}
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
     },
     "com.solidalloy.type.references": {
       "version": "git+https://github.com/SolidAlloy/ClassTypeReference-for-Unity#master",
