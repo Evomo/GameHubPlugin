@@ -6,6 +6,7 @@ using MotionAI.Core;
 using MotionAI.Core.Controller;
 using MotionAI.Core.POCO;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace GamehubPlugin {
@@ -17,6 +18,7 @@ namespace GamehubPlugin {
 		private MotionAIManager CurrentManager;
 		private Session currSess;
 
+		public UnityEvent OnEndSession;
 		#region Session Handle
 
 		public void StartSession(string gameName) {
@@ -45,8 +47,6 @@ namespace GamehubPlugin {
 				StartCoroutine(LoadGame(scene));
 			}
 		}
-
-
 		public void UnloadScene() {
 			if (_loadedScene != null) {
 				StartCoroutine(UnloadGame());
@@ -55,7 +55,6 @@ namespace GamehubPlugin {
 				Debug.Log("Would now return to the Gamehub");
 			}
 		}
-
 
 		IEnumerator LoadGame(SceneReference scene) {
 			AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
@@ -66,7 +65,6 @@ namespace GamehubPlugin {
 			SceneManager.SetActiveScene(SceneManager.GetSceneByPath(scene.ScenePath));
 			_loadedScene = scene;
 
-			//			transition.SetTrigger("End");
 		}
 
 
