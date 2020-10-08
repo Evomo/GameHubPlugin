@@ -2,13 +2,12 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace GamehubPlugin {
+namespace GamehubPlugin.Core {
 
 	public class GameHubGame : ScriptableObject {
 		public SceneReference mainSceneReference;
 		public string gameName;
 		public string description;
-		public string developerName;
 
 #if UNITY_EDITOR
 		[MenuItem("Evomo/Gamehub/Create Game Asset")]

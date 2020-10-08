@@ -1,15 +1,13 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using GamehubPlugin.Util;
 using MotionAI.Core;
 using MotionAI.Core.Controller;
-using MotionAI.Core.POCO;
+using MotionAI.Core.Util;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-namespace GamehubPlugin {
+namespace GamehubPlugin.Core {
 	public class GameHubManager : Singleton<GameHubManager> {
 		private SceneReference _loadedScene;
 
@@ -18,7 +16,7 @@ namespace GamehubPlugin {
 		private MotionAIManager CurrentManager;
 		private Session currSess;
 
-		public UnityEvent OnEndSession;
+		public UnityEvent OnEndSession, OnStartSession;
 		#region Session Handle
 
 		public void StartSession(string gameName) {

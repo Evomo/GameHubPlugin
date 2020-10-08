@@ -9,7 +9,7 @@
     "url": "https://github.com/Evomo/Gamehub.git"
   },
   "dependencies": {
-    "com.evomo.motionai": "0.1.0"
+    "com.evomo.motionai": "1.1.0"
   },
   "author": {
     "name": "Evomo",
