@@ -1,6 +1,6 @@
 {
   "name": "com.evomo.gamehub",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "displayName": "Evomo Gamehub",
   "description": "Plugin to integrate games with the Gamehub platform",
   "unity": "2019.1",
