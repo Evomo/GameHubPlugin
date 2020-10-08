@@ -5,7 +5,7 @@ using MotionAI.Core.Models.Generated;
 using MotionAI.Core.POCO;
 using UnityEngine;
 
-namespace GamehubPlugin {
+namespace GamehubPlugin.Core {
 	[Serializable]
 	public class Session {
 		public DateTime StartTime;
@@ -36,7 +36,7 @@ namespace GamehubPlugin {
 			movements = _mvDict.Values.ToArray();
 		}
 
-		public void RecordMovement(MovementDto m) {
+		public void RecordMovement(EvoMovement m) {
 			Debug.Log("recording");
 			RecordedMovement rm;
 			if (!_mvDict.TryGetValue(m.typeID, out rm)) {
