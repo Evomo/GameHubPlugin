@@ -6,7 +6,7 @@
   "unity": "2019.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Evomo/Gamehub.git"
+    "url": "https://github.com/Evomo/GameHubPlugin.git"
   },
   "dependencies": {
     "com.evomo.motionai": "1.1.0"
@@ -20,7 +20,7 @@
     {
       "displayName": "GameHub Game Demo",
       "description": "Demo to show off how to change scenes in the Gamehub",
-      "path": "Demos/GameLaunchDemo"
+      "path": "Samples/GameLaunchDemo"
     }
   ]
 }
