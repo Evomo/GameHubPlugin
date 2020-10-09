@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/Evomo/GameHubPlugin/compare/v1.0.0...v1.0.1) (2020-10-09)
+
+
+### Bug Fixes
+
+* changed plugin location ([ccc8f39](https://github.com/Evomo/GameHubPlugin/commit/ccc8f39883da474c85742407e38f4e693eb34318))
+
 # 1.0.0 (2020-10-09)
 
 
