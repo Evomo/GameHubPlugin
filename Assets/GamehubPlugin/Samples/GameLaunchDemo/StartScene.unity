@@ -480,6 +480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1662553181}
   - component: {fileID: 1662553180}
+  - component: {fileID: 1662553182}
   m_Layer: 0
   m_Name: UILoader
   m_TagString: Untagged
@@ -523,6 +524,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1662553182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662553179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2ddf6f58a4e5994391a3720a0c58208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1946625003
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,6 +639,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Overlay
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818732395151674299, guid: 0c8127a9b8a10334483686ef0dd77738,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7818732395151674303, guid: 0c8127a9b8a10334483686ef0dd77738,
         type: 3}
