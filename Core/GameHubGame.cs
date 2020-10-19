@@ -1,13 +1,14 @@
 ﻿using GamehubPlugin.Util;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace GamehubPlugin.Core {
-
 	public class GameHubGame : ScriptableObject {
 		public SceneReference mainSceneReference;
 		public string gameName;
 		public string description;
+		public RenderPipelineAsset scriptableRenderAsset;
 
 #if UNITY_EDITOR
 		[MenuItem("Evomo/Gamehub/Create Game Asset")]

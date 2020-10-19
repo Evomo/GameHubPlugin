@@ -1,21 +1,27 @@
-﻿using GamehubPlugin;
+﻿using System;
 using GamehubPlugin.Core;
-using GamehubPlugin.Util;
 using UnityEngine;
-
-namespace Demos.GameLaunchDemo {
+namespace GamehubPlugin.Samples.GameLaunchDemo {
 	public class TestSceneChanger : MonoBehaviour {
-		public SceneReference secondScene;
+		public void Update() {
 
+			if (Input.GetKeyDown(KeyCode.Space)) {
+				Debug.Log("start");
+				StartGame();
+			}
 
-		public void LoadGame() {
-			GameHubManager.Instance.LoadGameScene(secondScene);
+			if (Input.GetKeyDown(KeyCode.A)) {
+				Debug.Log("stop");
+				StopGame();
+			}
 		}
 
-
-		public void UnloadGame() {
-			GameHubManager.Instance.UnloadScene();
+		public void StartGame() {
+			GameHubManager.LoadScene(1);
 		}
 
+		public void StopGame() {
+			GameHubManager.StopGame();
+		}
 	}
 }

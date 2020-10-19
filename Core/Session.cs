@@ -9,19 +9,24 @@ namespace GamehubPlugin.Core {
 	[Serializable]
 	public class Session {
 		public DateTime StartTime;
+		public bool recordElmos;
+		public int coinsCollected;
 		public string name;
 		public float score;
-		public double duration;
-		public RecordedMovement[] movements;
 		public long timestamp;
+		public double duration;
+		public Record[] movements, elmos;
 
 
-		private Dictionary<MovementEnum, RecordedMovement> _mvDict;
+		private Dictionary<MovementEnum, Record> _mvDict;
+		private Dictionary<ElmoEnum, Record> _elmoDict;
 
-		public Session(string gameName) {
-			_mvDict = new Dictionary<MovementEnum, RecordedMovement>();
+		public Session(string gameName, bool recordElmos = false) {
+			_mvDict = new Dictionary<MovementEnum, Record>();
+			_elmoDict = new Dictionary<ElmoEnum, Record>();
+			this.recordElmos = recordElmos;
 			StartTime = DateTime.Now;
-			timestamp = ((DateTimeOffset)StartTime).ToUnixTimeSeconds();
+			timestamp = ((DateTimeOffset) StartTime).ToUnixTimeSeconds();
 			name = gameName;
 		}
 
@@ -29,31 +34,40 @@ namespace GamehubPlugin.Core {
 			return JsonUtility.ToJson(this);
 		}
 
-		public void EndSession(float sessionScore) {
+		public void EndSession(int sessionScore, int coins) {
 			duration = (DateTime.Now - StartTime).TotalSeconds;
 			score = sessionScore;
+			coinsCollected = coins;
 			Debug.Log(_mvDict.Values.ToArray());
 			movements = _mvDict.Values.ToArray();
 		}
 
-		public void RecordMovement(EvoMovement m) {
-			Debug.Log("recording");
-			RecordedMovement rm;
-			if (!_mvDict.TryGetValue(m.typeID, out rm)) {
-				rm = new RecordedMovement(m.typeID);
-				_mvDict[m.typeID] = rm;
+		private void UpdateRecord<T>(T enumVal, ref Dictionary<T, Record> dict) {
+			Record rm;
+			if (!dict.TryGetValue(enumVal, out rm)) {
+				rm = new Record(enumVal.ToString());
+				dict[enumVal] = rm;
 			}
 
 			rm.amount++;
 		}
 
+		public void RecordMovement(EvoMovement m) {
+			UpdateRecord(m.typeID, ref _mvDict);
+			if (recordElmos) {
+				foreach (ElementalMovement elmo in m.elmos) {
+					UpdateRecord(elmo.typeID, ref _elmoDict);
+				}
+			}
+		}
+
 		[Serializable]
-		public class RecordedMovement {
+		public class Record {
 			public string name;
 			public int amount;
 
-			public RecordedMovement(MovementEnum e) {
-				name = e.ToString();
+			public Record(string e) {
+				name = e;
 				amount = 0;
 			}
 		}
