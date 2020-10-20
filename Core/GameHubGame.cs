@@ -8,8 +8,10 @@ namespace GamehubPlugin.Core {
 		public SceneReference mainSceneReference;
 		public string gameName;
 		public string description;
-		public RenderPipelineAsset scriptableRenderAsset;
+		public bool recordElmos;
+		public int gameId;
 
+		public RenderPipelineAsset scriptableRenderAsset;
 #if UNITY_EDITOR
 		[MenuItem("Evomo/Gamehub/Create Game Asset")]
 		public static void CreateGameHubGame() {
