@@ -162,7 +162,7 @@ namespace GamehubPlugin.Core {
 			if (currSess != null) {
 				currSess?.EndSession(score, coinsCollected);
 				Debug.Log(currSess.ToString());
-				//TODO send to native sdk 
+				SendCurrentSession();
 			}
 
 			currSess = null;
