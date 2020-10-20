@@ -538,6 +538,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ddf6f58a4e5994391a3720a0c58208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testScene:
+    sceneAsset: {fileID: 102900000, guid: 0feecf998dc8eea4d9b9d926afc214a3, type: 3}
+    scenePath: Assets/GamehubPlugin/Samples/GameLaunchDemo/EndScene.unity
+  sceneNum: 0
 --- !u!1 &1946625003
 GameObject:
   m_ObjectHideFlags: 0

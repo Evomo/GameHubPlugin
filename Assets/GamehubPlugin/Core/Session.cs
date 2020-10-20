@@ -6,28 +6,40 @@ using MotionAI.Core.POCO;
 using UnityEngine;
 
 namespace GamehubPlugin.Core {
+	public struct SessionSettings {
+		public static SessionSettings CreateInstance(GameHubGame game) {
+			SessionSettings sess = new SessionSettings();
+			sess.gameId = game.gameId;
+			sess.recordElmos = game.recordElmos;
+			return sess;
+		}
+
+		public int gameId;
+		public bool recordElmos;
+	}
+
 	[Serializable]
 	public class Session {
 		public DateTime StartTime;
 		public bool recordElmos;
 		public int coinsCollected;
-		public string name;
 		public float score;
 		public long timestamp;
 		public double duration;
 		public Record[] movements, elmos;
+		public int gameId;
 
 
 		private Dictionary<MovementEnum, Record> _mvDict;
 		private Dictionary<ElmoEnum, Record> _elmoDict;
 
-		public Session(string gameName, bool recordElmos = false) {
+		public Session(int gameId, bool recordElmos = false) {
 			_mvDict = new Dictionary<MovementEnum, Record>();
 			_elmoDict = new Dictionary<ElmoEnum, Record>();
 			this.recordElmos = recordElmos;
 			StartTime = DateTime.Now;
 			timestamp = ((DateTimeOffset) StartTime).ToUnixTimeSeconds();
-			name = gameName;
+			this.gameId = gameId;
 		}
 
 		public override string ToString() {
