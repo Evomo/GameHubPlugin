@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MotionAI.Core.Util;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,38 +7,52 @@ using UnityEngine.UI;
 
 namespace GamehubPlugin.Core {
 	public class Overlay : Singleton<Overlay> {
-		public Button start, settings, quit, tutorial;
+		public Button start, pause, quit, tutorial;
 		public GameObject pauseMenuUI;
 
 
 		public UnityEvent onSettings, onTutorial;
-		public static bool isPaused; 
 
-		
-		public void Start() {
-			GameHubManager.Instance.onGameLoad.AddListener(Pause);
-			
-			
-			tutorial.onClick.AddListener(() => onTutorial.Invoke());
-			settings.onClick.AddListener(() => onSettings.Invoke());
-			start.onClick.AddListener(Resume);
+		[SerializeField] private bool isPaused;
+
+		public bool IsPaused {
+			get { return isPaused; }
+			set {
+				isPaused = value;
+				if (isPaused) {
+					Pause();
+				}
+				else {
+					Resume();
+				}
+			}
 		}
 
-		private void QuitGame() {
+
+		public void Start() {
+			GameHubManager.Instance.onGameLoad.AddListener(Pause);
+		}
+
+
+		public void TogglePause() {
+			IsPaused = !IsPaused;
+		}
+
+		public void QuitGame() {
 			Resume();
 			GameHubManager.StopGame();
 		}
-		private void Resume() {
+
+		public void Resume() {
 			Time.timeScale = 1f;
-			isPaused = false;
+			//IsPaused = false;
 			pauseMenuUI.SetActive(false);
 		}
 
-		private void Pause() {
+		public void Pause() {
 			Time.timeScale = 0;
-			isPaused = true;
+		//	IsPaused = true;
 			pauseMenuUI.SetActive(true);
 		}
-		
 	}
 }

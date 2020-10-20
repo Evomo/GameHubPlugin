@@ -1,18 +1,30 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using MotionAI.Core.Controller;
 using MotionAI.Core.Util;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+
 namespace GamehubPlugin.Core {
 	public class GameHubManager : Singleton<GameHubManager> {
 		private Scene _loadedScene;
 
 
+		[SerializeField] private Overlay overlayPrefab;
+		private Overlay overlay;
 		private MotionAIManager m_CurrentManager;
 		private Session currSess;
 
 		public UnityEvent OnEndSession, OnStartSession, onGameLoad;
+
+		#region Unity Lifecycle
+
+		public void Awake() {
+			overlay = Instantiate(overlayPrefab).GetComponent<Overlay>();
+		}
+
+		#endregion
 
 		#region Session Handle
 
@@ -42,15 +54,14 @@ namespace GamehubPlugin.Core {
 
 		#region Public API
 
-		
 		public void LoadGameScene(int scene) {
-			if (_loadedScene.buildIndex == 0) {
+			if (_loadedScene.buildIndex <= 0) {
 				StartCoroutine(LoadGame(scene));
 			}
 		}
 
 		public void UnloadScene() {
-			if (_loadedScene.buildIndex == 0) {
+			if (_loadedScene.buildIndex > 0) {
 				StartCoroutine(UnloadGame());
 			}
 			else {
