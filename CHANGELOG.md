@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/Evomo/GameHubPlugin/compare/v1.1.0...v1.1.1) (2020-10-21)
+
+
+### Bug Fixes
+
+* fixed samples path ([a25af2f](https://github.com/Evomo/GameHubPlugin/commit/a25af2f407c3cbf8401a4eed16a53f5d26259400))
+
 # [1.1.0](https://github.com/Evomo/GameHubPlugin/compare/v1.0.1...v1.1.0) (2020-10-20)
 
 
