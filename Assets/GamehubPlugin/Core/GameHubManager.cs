@@ -9,6 +9,9 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace GamehubPlugin.Core {
+	[Serializable]
+	public class HubSessionEvent : UnityEvent<CommunicationMessages> { }
+
 	public class GameHubManager : Singleton<GameHubManager> {
 		private Scene _loadedScene;
 
@@ -19,8 +22,8 @@ namespace GamehubPlugin.Core {
 		private Session currSess;
 
 		private List<Session> playSessionRuns;
-		public UnityEvent OnEndSession, OnStartSession, onGameLoad;
-
+		public UnityEvent onGameLoad, onGameQuit;
+		public HubSessionEvent onSession;
 		private SessionSettings _settings;
 
 		#region Unity Lifecycle
@@ -74,7 +77,7 @@ namespace GamehubPlugin.Core {
 
 		#region App communication
 
-		public void SendAllSession() {
+		public void SendAllSessions() {
 			// TODO send all
 
 			CommunicationMessages msg = new CommunicationMessages();
@@ -82,7 +85,7 @@ namespace GamehubPlugin.Core {
 			msg.sessions = playSessionRuns;
 			msg.messageType = CommunicationMessageType.ENDGAME;
 
-			SendMessageToApp(JsonUtility.ToJson(msg));
+			onSession.Invoke(msg);
 		}
 
 		public void SendCurrentSession() {
@@ -90,26 +93,21 @@ namespace GamehubPlugin.Core {
 
 			msg.sessions = playSessionRuns;
 			msg.messageType = CommunicationMessageType.CURRENTSESSION;
-			SendMessageToApp(JsonUtility.ToJson(msg));
-		}
-
-		public void SendMessageToApp(string message) {
-			//TODO send to app
+			onSession.Invoke(msg);
 		}
 
 		#endregion
 
-		#region Public API
 
 		#region Wrapped methods
 
-		private void LoadSceneWrapped(int scene) {
+		public void LoadSceneWrapped(int scene) {
 			if (_loadedScene.buildIndex <= 0) {
 				StartCoroutine(LoadGame(scene));
 			}
 		}
 
-		private void LoadSceneWrapped(GameHubGame game) {
+		public void LoadSceneWrapped(GameHubGame game) {
 			_settings = SessionSettings.CreateInstance(game);
 			LoadSceneWrapped(SceneManager.GetSceneByPath(game.mainSceneReference.ScenePath).buildIndex);
 		}
@@ -121,20 +119,19 @@ namespace GamehubPlugin.Core {
 		}
 
 
-		public static void LoadScene(GameHubGame game) {
-			GameHubManager.Instance.LoadSceneWrapped(game);
+		private void QuitGame() {
+			UnloadScene();
+			SendAllSessions();
+			onGameQuit.Invoke();
 		}
 
-		public static void LoadScene(int sceneNumber) {
-			GameHubManager.Instance.LoadSceneWrapped(sceneNumber);
-		}
-		
 		private void ResetScene() {
 			if (_loadedScene.buildIndex > 0) {
 				if (currSess != null) {
 					playSessionRuns.Add(currSess);
 				}
 
+				EndSession();
 				StartCoroutine(ResetGameCoroutine());
 				StartSessionWrapper();
 			}
@@ -145,20 +142,22 @@ namespace GamehubPlugin.Core {
 		}
 
 		private void StartSessionWrapper(int gameName, bool recordElmos) {
+			if (currSess != null) {
+				Debug.LogError("End current session before starting a new one");
+				return;
+			}
+
 			try {
 				m_CurrentManager = FindObjectOfType<MotionAIManager>();
 				currSess = new Session(gameName, recordElmos);
 				m_CurrentManager.controllerManager.onMovement.AddListener(currSess.RecordMovement);
 			}
-			catch (Exception e) {
+			catch (Exception) {
 				Debug.LogError("No MotionAIManager present in scene ");
 			}
 		}
 
-		#endregion
-
-
-		public void EndSession(int score = 0, int coinsCollected = 0) {
+		private void EndSession(int score = 0, int coinsCollected = 0) {
 			if (currSess != null) {
 				currSess?.EndSession(score, coinsCollected);
 				Debug.Log(currSess.ToString());
@@ -168,14 +167,21 @@ namespace GamehubPlugin.Core {
 			currSess = null;
 		}
 
+		#endregion
+
+		#region Public API
 
 		public static void ResetGame() {
 			GameHubManager.Instance.ResetScene();
 		}
 
 
+		public static void StartSession() {
+			GameHubManager.Instance.StartSessionWrapper();
+		}
+
 		public static void StopGame() {
-			GameHubManager.Instance.UnloadScene();
+			GameHubManager.Instance.QuitGame();
 		}
 
 		#endregion

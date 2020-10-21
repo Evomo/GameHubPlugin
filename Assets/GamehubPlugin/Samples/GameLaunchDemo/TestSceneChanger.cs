@@ -20,7 +20,7 @@ namespace GamehubPlugin.Samples.GameLaunchDemo {
 		public void Update() {
 			if (Input.GetKeyDown(KeyCode.Space)) {
 				Debug.Log("start");
-				GameHubManager.LoadScene(sceneNum);
+				GameHubManager.Instance.LoadSceneWrapped(sceneNum);
 			}
 
 			if (Input.GetKeyDown(KeyCode.A)) {
