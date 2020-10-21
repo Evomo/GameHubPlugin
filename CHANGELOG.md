@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/Evomo/GameHubPlugin/compare/v1.1.2...v1.1.3) (2020-10-21)
+
+
+### Bug Fixes
+
+* game loading bug ([418c402](https://github.com/Evomo/GameHubPlugin/commit/418c4027e088ae4ee3d2ea8fec9c4d03cc9f7532))
+
 ## [1.1.2](https://github.com/Evomo/GameHubPlugin/compare/v1.1.1...v1.1.2) (2020-10-21)
 
 
