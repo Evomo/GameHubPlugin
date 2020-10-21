@@ -21,7 +21,7 @@
     {
       "displayName": "GameHub Game Demo",
       "description": "Demo to show off how to change scenes in the Gamehub",
-      "path": "Samples/GameLaunchDemo"
+      "path": "Samples~/GameLaunchDemo"
     }
   ]
 }
