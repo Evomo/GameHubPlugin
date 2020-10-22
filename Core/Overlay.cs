@@ -13,13 +13,13 @@ namespace GamehubPlugin.Core {
 
 		public UnityEvent onSettings, onTutorial;
 
-		[SerializeField] private bool isPaused;
+		private bool _isPaused;
 
 		public bool IsPaused {
-			get { return isPaused; }
+			get { return _isPaused; }
 			set {
-				isPaused = value;
-				if (isPaused) {
+				_isPaused = value;
+				if (_isPaused) {
 					Pause();
 				}
 				else {
@@ -31,6 +31,11 @@ namespace GamehubPlugin.Core {
 
 		public void Start() {
 			GameHubManager.Instance.onGameLoad.AddListener(Pause);
+		
+			//start.onClick.AddListener(() => Debug.Log("start"));
+			//pause.onClick.AddListener(() => Debug.Log("pause"));
+			//quit.onClick.AddListener(() => Debug.Log("quit"));
+			//tutorial.onClick.AddListener(() => Debug.Log("tutorial"));
 		}
 
 
@@ -51,7 +56,7 @@ namespace GamehubPlugin.Core {
 
 		public void Pause() {
 			Time.timeScale = 0;
-		//	IsPaused = true;
+			//	IsPaused = true;
 			pauseMenuUI.SetActive(true);
 		}
 	}
