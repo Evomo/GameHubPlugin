@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GamehubPlugin.Util;
 using MotionAI.Core.Controller;
+using MotionAI.Core.POCO;
 using MotionAI.Core.Util;
 using UnityEngine;
 using UnityEngine.Events;
@@ -36,9 +37,6 @@ namespace GamehubPlugin.Core {
 
 		#endregion
 
-		#region Session Handle
-
-		#endregion
 
 		#region Scene Loading
 
@@ -77,9 +75,7 @@ namespace GamehubPlugin.Core {
 
 		#region App communication
 
-		public void SendAllSessions() {
-			// TODO send all
-
+		private void SendAllSessions() {
 			CommunicationMessages msg = new CommunicationMessages();
 
 			msg.sessions = playSessionRuns;
@@ -88,12 +84,14 @@ namespace GamehubPlugin.Core {
 			onSession.Invoke(msg);
 		}
 
-		public void SendCurrentSession() {
-			CommunicationMessages msg = new CommunicationMessages();
+		private void SendCurrentSession(Session toSend) {
+			if (currSess != null) {
+				CommunicationMessages msg = new CommunicationMessages();
 
-			msg.sessions = playSessionRuns;
-			msg.messageType = CommunicationMessageType.CURRENTSESSION;
-			onSession.Invoke(msg);
+				msg.sessions = new List<Session> {toSend};
+				msg.messageType = CommunicationMessageType.CURRENTSESSION;
+				onSession.Invoke(msg);
+			}
 		}
 
 		#endregion
@@ -114,6 +112,7 @@ namespace GamehubPlugin.Core {
 		}
 
 		private void UnloadScene() {
+			playSessionRuns.Clear();
 			if (_loadedScene.buildIndex > 0) {
 				StartCoroutine(UnloadGame());
 			}
@@ -121,25 +120,27 @@ namespace GamehubPlugin.Core {
 
 
 		private void QuitGame() {
-			UnloadScene();
 			SendAllSessions();
+			UnloadScene();
 			onGameQuit.Invoke();
 		}
 
 		private void ResetScene() {
-			if (_loadedScene.buildIndex > 0) {
-				if (currSess != null) {
-					playSessionRuns.Add(currSess);
-				}
+			if (currSess != null) {
+				Debug.LogError("Can't reset the scene without ending the session");
+				return;
+			}
 
-				EndSession();
+			if (_loadedScene.buildIndex > 0) {
 				StartCoroutine(ResetGameCoroutine());
 				StartSessionWrapper();
 			}
 		}
 
 		private void StartSessionWrapper() {
-			StartSessionWrapper(_settings.gameId, _settings.recordElmos);
+			if (_settings != null) {
+				StartSessionWrapper(_settings.gameId, _settings.recordElmos);
+			}
 		}
 
 		private void StartSessionWrapper(int gameName, bool recordElmos) {
@@ -151,36 +152,63 @@ namespace GamehubPlugin.Core {
 			try {
 				m_CurrentManager = FindObjectOfType<MotionAIManager>();
 				currSess = new Session(gameName, recordElmos);
-				m_CurrentManager.controllerManager.onMovement.AddListener(currSess.RecordMovement);
+				m_CurrentManager.controllerManager.onMovement.AddListener(SessionRecordCallback);
 			}
 			catch (Exception) {
 				Debug.LogError("No MotionAIManager present in scene ");
 			}
 		}
 
-		private void EndSession(int score = 0, int coinsCollected = 0) {
+		private void SessionRecordCallback(EvoMovement mov) {
+			if (!overlay.IsPaused) {
+				currSess.RecordMovement(mov);
+			}
+		}
+
+		private Session EndSessionWrapped(int score = 0, int coinsCollected = 0) {
+			Session toReturn = currSess;
 			if (currSess != null) {
-				currSess?.EndSession(score, coinsCollected);
+				toReturn = currSess?.EndSession(score, coinsCollected);
+				playSessionRuns.Add(toReturn);
 				Debug.Log(currSess.ToString());
-				SendCurrentSession();
 			}
 
 			currSess = null;
+			return toReturn;
 		}
 
 		#endregion
 
 		#region Public API
 
+		/// <summary>
+		/// Function to restart the game, the game scene is reloaded and can only be used when a session has been ended
+		/// </summary>
 		public static void ResetGame() {
 			GameHubManager.Instance.ResetScene();
 		}
 
 
+		/// <summary>
+		/// Function that tells the manager to start recording movements
+		/// </summary>
 		public static void StartSession() {
 			GameHubManager.Instance.StartSessionWrapper();
 		}
 
+		/// <summary>
+		/// Ends the session with the given parameters and stores them in a list for all the sessions played in a continuous use of the gamehub
+		/// </summary>
+		/// <param name="score"> Internal score used in the game </param>
+		/// <param name="coinsCollected">Currency for the main app </param>
+		public static void EndSession(int score, int coinsCollected) {
+			Session toSend = GameHubManager.Instance.EndSessionWrapped(score, coinsCollected);
+			GameHubManager.Instance.SendCurrentSession(toSend);
+		}
+
+		/// <summary>
+		/// Stops the game and returns to the main app
+		/// </summary>
 		public static void StopGame() {
 			GameHubManager.Instance.QuitGame();
 		}
