@@ -1,3 +1,10 @@
+## [1.1.7](https://github.com/Evomo/GameHubPlugin/compare/v1.1.6...v1.1.7) (2020-10-22)
+
+
+### Bug Fixes
+
+* scene change ([eb78b8d](https://github.com/Evomo/GameHubPlugin/commit/eb78b8ddac0444c01375e86499a8601b0fadd357))
+
 ## [1.1.6](https://github.com/Evomo/GameHubPlugin/compare/v1.1.5...v1.1.6) (2020-10-22)
 
 
