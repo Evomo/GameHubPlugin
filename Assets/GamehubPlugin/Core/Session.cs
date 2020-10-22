@@ -6,7 +6,7 @@ using MotionAI.Core.POCO;
 using UnityEngine;
 
 namespace GamehubPlugin.Core {
-	public struct SessionSettings {
+	public class SessionSettings {
 		public static SessionSettings CreateInstance(GameHubGame game) {
 			SessionSettings sess = new SessionSettings();
 			sess.gameId = game.gameId;
@@ -46,12 +46,13 @@ namespace GamehubPlugin.Core {
 			return JsonUtility.ToJson(this);
 		}
 
-		public void EndSession(int sessionScore, int coins) {
+		public Session EndSession(int sessionScore, int coins) {
 			duration = (DateTime.Now - StartTime).TotalSeconds;
 			score = sessionScore;
 			coinsCollected = coins;
 			Debug.Log(_mvDict.Values.ToArray());
 			movements = _mvDict.Values.ToArray();
+			return this;
 		}
 
 		private void UpdateRecord<T>(T enumVal, ref Dictionary<T, Record> dict) {
