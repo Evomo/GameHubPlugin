@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/Evomo/GameHubPlugin/compare/v1.1.4...v1.1.5) (2020-10-22)
+
+
+### Bug Fixes
+
+* not record while pause and exposed new methods ([a9da548](https://github.com/Evomo/GameHubPlugin/commit/a9da548feb36910b5090109127d39da5c4830b75))
+
 ## [1.1.4](https://github.com/Evomo/GameHubPlugin/compare/v1.1.3...v1.1.4) (2020-10-22)
 
 
