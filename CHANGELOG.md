@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/Evomo/GameHubPlugin/compare/v1.1.5...v1.1.6) (2020-10-22)
+
+
+### Bug Fixes
+
+* use without overlay ([9995b53](https://github.com/Evomo/GameHubPlugin/commit/9995b536dbbb13a40e7bf426e1225ead2fcdbad3))
+
 ## [1.1.5](https://github.com/Evomo/GameHubPlugin/compare/v1.1.4...v1.1.5) (2020-10-22)
 
 
