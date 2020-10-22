@@ -93,7 +93,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.55
+  m_fontSize: 18
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -790,7 +790,6 @@ GameObject:
   - component: {fileID: 7818732395891534488}
   - component: {fileID: 7818732395891534491}
   - component: {fileID: 7818732395891534490}
-  - component: {fileID: 7818732395891534489}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -858,29 +857,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7818732395891534489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7818732395891534503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aad67a7c7e674b478ca4175d03b889b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  start: {fileID: 0}
-  pause: {fileID: 0}
-  quit: {fileID: 0}
-  tutorial: {fileID: 0}
-  pauseMenuUI: {fileID: 7818732395891534503}
-  onSettings:
-    m_PersistentCalls:
-      m_Calls: []
-  onTutorial:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &7818732395903239965
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,7 +949,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.6
+  m_fontSize: 18.75
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
