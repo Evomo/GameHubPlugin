@@ -32,7 +32,9 @@ namespace GamehubPlugin.Core {
 		public void Awake() {
 			_settings = new SessionSettings();
 			playSessionRuns = new List<Session>();
-			overlay = Instantiate(overlayPrefab).GetComponent<Overlay>();
+			if (overlayPrefab != null) {
+				overlay = Instantiate(overlayPrefab).GetComponent<Overlay>();
+			}
 		}
 
 		#endregion
@@ -160,8 +162,10 @@ namespace GamehubPlugin.Core {
 		}
 
 		private void SessionRecordCallback(EvoMovement mov) {
-			if (!overlay.IsPaused) {
-				currSess.RecordMovement(mov);
+			if (overlay != null) {
+				if (!overlay.IsPaused) {
+					currSess.RecordMovement(mov);
+				}
 			}
 		}
 
