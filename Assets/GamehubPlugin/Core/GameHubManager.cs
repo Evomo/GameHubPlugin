@@ -109,7 +109,16 @@ namespace GamehubPlugin.Core {
 
 		public void LoadSceneWrapped(GameHubGame game) {
 			_settings = SessionSettings.CreateInstance(game);
-			int sceneNum = BuildUtils.GetBuildScene(game.mainSceneReference.sceneAsset).buildIndex;
+			int sceneNum;
+
+#if UNITY_EDITOR
+			sceneNum = BuildUtils.GetBuildScene(game.mainSceneReference.sceneAsset).buildIndex;
+#endif
+#if !UNITY_EDITOR
+			sceneNum = SceneManager.GetSceneByPath(game.mainSceneReference.ScenePath).buildIndex;
+
+#endif
+
 			LoadSceneWrapped(sceneNum);
 		}
 
