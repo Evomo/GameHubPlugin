@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace GamehubPlugin.Samples.GameLaunchDemo {
 	public class TestSceneChanger : MonoBehaviour {
+#if UNITY_EDITOR
 		[Tooltip(
 			"Optional scene to test how it'll behave in the gamehub, will load the scene in build index 1 if left null")]
 		public SceneReference testScene;
@@ -34,5 +35,6 @@ namespace GamehubPlugin.Samples.GameLaunchDemo {
 				GameHubManager.ResetGame();
 			}
 		}
+#endif
 	}
 }
