@@ -1,3 +1,10 @@
+## [1.1.9](https://github.com/Evomo/GameHubPlugin/compare/v1.1.8...v1.1.9) (2020-10-23)
+
+
+### Bug Fixes
+
+* stop recording movements when paused ([dd3db56](https://github.com/Evomo/GameHubPlugin/commit/dd3db56770b7be95715163c890f0e322c2f1ee3d))
+
 ## [1.1.8](https://github.com/Evomo/GameHubPlugin/compare/v1.1.7...v1.1.8) (2020-10-23)
 
 
