@@ -50,15 +50,15 @@ namespace GamehubPlugin.Core {
 			duration = (DateTime.Now - StartTime).TotalSeconds;
 			score = sessionScore;
 			coinsCollected = coins;
-			Debug.Log(_mvDict.Values.ToArray());
 			movements = _mvDict.Values.ToArray();
+			elmos = _elmoDict.Values.ToArray();
 			return this;
 		}
 
 		private void UpdateRecord<T>(T enumVal, ref Dictionary<T, Record> dict) {
 			Record rm;
 			if (!dict.TryGetValue(enumVal, out rm)) {
-				rm = new Record(enumVal.ToString());
+				rm = new Record(Enum.GetName(typeof(T), enumVal));
 				dict[enumVal] = rm;
 			}
 
