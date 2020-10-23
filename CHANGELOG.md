@@ -1,3 +1,10 @@
+## [1.1.8](https://github.com/Evomo/GameHubPlugin/compare/v1.1.7...v1.1.8) (2020-10-23)
+
+
+### Bug Fixes
+
+* updated sessions ([4dd1257](https://github.com/Evomo/GameHubPlugin/commit/4dd12576688ed819e025af06ef1f5f88a62e595e))
+
 ## [1.1.7](https://github.com/Evomo/GameHubPlugin/compare/v1.1.6...v1.1.7) (2020-10-22)
 
 
