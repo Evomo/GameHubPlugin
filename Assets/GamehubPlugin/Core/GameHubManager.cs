@@ -172,6 +172,10 @@ namespace GamehubPlugin.Core {
 
 			try {
 				m_CurrentManager = FindObjectOfType<MotionAIManager>();
+				if (overlay != null) {
+					overlay.UpdateManager(m_CurrentManager);
+				}
+
 				currSess = new Session(gameName, recordElmos);
 				m_CurrentManager.controllerManager.onMovement.AddListener(SessionRecordCallback);
 			}

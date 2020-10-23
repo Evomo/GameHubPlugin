@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using MotionAI.Core.Controller;
 using MotionAI.Core.Util;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,6 +12,7 @@ namespace GamehubPlugin.Core {
 		public GameObject pauseMenuUI;
 
 
+		private MotionAIManager m_Manager;
 		public UnityEvent onSettings, onTutorial;
 
 		private bool _isPaused;
@@ -31,7 +33,7 @@ namespace GamehubPlugin.Core {
 
 		public void Start() {
 			GameHubManager.Instance.onGameLoad.AddListener(Pause);
-		
+
 			//start.onClick.AddListener(() => Debug.Log("start"));
 			//pause.onClick.AddListener(() => Debug.Log("pause"));
 			//quit.onClick.AddListener(() => Debug.Log("quit"));
@@ -39,8 +41,15 @@ namespace GamehubPlugin.Core {
 		}
 
 
+		public void UpdateManager(MotionAIManager manager) {
+			m_Manager = manager;
+		}
+
 		public void TogglePause() {
 			IsPaused = !IsPaused;
+			if (m_Manager != null) {
+				m_Manager.IsTracking = !IsPaused;
+			}
 		}
 
 		public void QuitGame() {
