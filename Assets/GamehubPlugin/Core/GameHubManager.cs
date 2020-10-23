@@ -25,12 +25,15 @@ namespace GamehubPlugin.Core {
 		private List<Session> playSessionRuns;
 		public UnityEvent onGameLoad, onGameQuit;
 		public HubSessionEvent onSession;
-		private SessionSettings _settings;
+		private SessionSettings m_Settings;
+
+
+		public bool isGameRunning { get; private set; }
 
 		#region Unity Lifecycle
 
 		public void Awake() {
-			_settings = new SessionSettings();
+			m_Settings = new SessionSettings();
 			playSessionRuns = new List<Session>();
 			if (overlayPrefab != null) {
 				overlay = Instantiate(overlayPrefab).GetComponent<Overlay>();
@@ -51,6 +54,7 @@ namespace GamehubPlugin.Core {
 			_loadedScene = SceneManager.GetSceneByBuildIndex(sceneBuildNumber);
 			SceneManager.SetActiveScene(_loadedScene);
 			onGameLoad.Invoke();
+			isGameRunning = true;
 		}
 
 
@@ -58,6 +62,7 @@ namespace GamehubPlugin.Core {
 			AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 			yield return new WaitUntil(() => asyncLoad.isDone);
 
+			isGameRunning = false;
 			_loadedScene = SceneManager.GetSceneByBuildIndex(0);
 		}
 
@@ -108,7 +113,7 @@ namespace GamehubPlugin.Core {
 		}
 
 		public void LoadSceneWrapped(GameHubGame game) {
-			_settings = SessionSettings.CreateInstance(game);
+			m_Settings = SessionSettings.CreateInstance(game);
 			int sceneNum;
 
 #if UNITY_EDITOR
@@ -132,8 +137,13 @@ namespace GamehubPlugin.Core {
 
 		private void QuitGame() {
 			SendAllSessions();
-			UnloadScene();
-			onGameQuit.Invoke();
+			if (isGameRunning) {
+				UnloadScene();
+				onGameQuit.Invoke();
+			}
+			else {
+				Debug.Log("Would now return to Gamehub ");
+			}
 		}
 
 		private void ResetScene() {
@@ -149,8 +159,8 @@ namespace GamehubPlugin.Core {
 		}
 
 		private void StartSessionWrapper() {
-			if (_settings != null) {
-				StartSessionWrapper(_settings.gameId, _settings.recordElmos);
+			if (m_Settings != null) {
+				StartSessionWrapper(m_Settings.gameId, m_Settings.recordElmos);
 			}
 		}
 
