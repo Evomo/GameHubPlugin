@@ -48,7 +48,7 @@ namespace GamehubPlugin.Core {
 		public void TogglePause() {
 			IsPaused = !IsPaused;
 			if (m_Manager != null) {
-				m_Manager.IsTracking = !IsPaused;
+				m_Manager.isTracking = !IsPaused;
 			}
 		}
 
