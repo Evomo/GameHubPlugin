@@ -1,3 +1,10 @@
+## [1.1.11](https://github.com/Evomo/GameHubPlugin/compare/v1.1.10...v1.1.11) (2020-10-26)
+
+
+### Bug Fixes
+
+* refactor bug ([057500c](https://github.com/Evomo/GameHubPlugin/commit/057500c3fc6fba538ef50cf20fe4ef31218b6e03))
+
 ## [1.1.10](https://github.com/Evomo/GameHubPlugin/compare/v1.1.9...v1.1.10) (2020-10-26)
 
 
