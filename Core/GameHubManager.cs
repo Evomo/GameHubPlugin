@@ -13,6 +13,12 @@ namespace GamehubPlugin.Core {
     [Serializable]
     public class HubSessionEvent : UnityEvent<CommunicationMessages> { }
 
+    [Serializable]
+    public class HubEvents {
+        public UnityEvent onGameLoad, onGameQuit;
+        public HubSessionEvent onSession;
+    }
+
     public class GameHubManager : Singleton<GameHubManager> {
         private Scene _loadedScene;
 
@@ -22,22 +28,20 @@ namespace GamehubPlugin.Core {
         private MotionAIManager m_CurrentManager;
         private Session currSess;
 
-        private List<Session> playSessionRuns;
-        public UnityEvent onGameLoad, onGameQuit;
-        public HubSessionEvent onSession;
-        private SessionSettings m_Settings;
+        private List<Session> playSessionRuns = new List<Session>();
+        public GameHubGame loadedGame;
 
-
+        [SerializeField] public HubEvents hubEvents = new HubEvents();
         public bool isGameRunning { get; private set; }
 
         #region Unity Lifecycle
 
         public void Awake() {
-            m_Settings = new SessionSettings();
-            playSessionRuns = new List<Session>();
             if (overlayPrefab != null) {
                 overlay = Instantiate(overlayPrefab).GetComponent<Overlay>();
             }
+
+            loadedGame = null;
         }
 
         #endregion
@@ -45,16 +49,16 @@ namespace GamehubPlugin.Core {
 
         #region Scene Loading
 
-        IEnumerator LoadGame(int sceneBuildNumber) {
-            Scene scene = SceneManager.GetSceneByBuildIndex(sceneBuildNumber);
+        IEnumerator LoadGame(int sceneBuildNumber, GameHubGame game) {
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneBuildNumber, LoadSceneMode.Additive);
             yield return new WaitUntil(() => asyncLoad.isDone);
 
-            playSessionRuns.Clear();
             _loadedScene = SceneManager.GetSceneByBuildIndex(sceneBuildNumber);
             SceneManager.SetActiveScene(_loadedScene);
-            onGameLoad.Invoke();
+            overlay.ResetPanel(game);
+            loadedGame = game;
             isGameRunning = true;
+            hubEvents.onGameLoad.Invoke();
         }
 
 
@@ -63,6 +67,7 @@ namespace GamehubPlugin.Core {
             yield return new WaitUntil(() => asyncLoad.isDone);
 
             isGameRunning = false;
+            loadedGame = null;
             _loadedScene = SceneManager.GetSceneByBuildIndex(0);
         }
 
@@ -70,12 +75,7 @@ namespace GamehubPlugin.Core {
             int sceneNumber = _loadedScene.buildIndex;
             AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(sceneNumber);
             yield return new WaitUntil(() => asyncUnload.isDone);
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneNumber, LoadSceneMode.Additive);
-            yield return new WaitUntil(() => asyncLoad.isDone);
-            _loadedScene = SceneManager.GetSceneByBuildIndex(sceneNumber);
-
-
-            SceneManager.SetActiveScene(_loadedScene);
+            StartCoroutine(LoadGame(sceneNumber, loadedGame));
         }
 
         #endregion
@@ -88,7 +88,7 @@ namespace GamehubPlugin.Core {
             msg.sessions = playSessionRuns;
             msg.messageType = CommunicationMessageType.ENDGAME;
 
-            onSession.Invoke(msg);
+            hubEvents.onSession.Invoke(msg);
         }
 
         private void SendCurrentSession(Session toSend) {
@@ -97,7 +97,7 @@ namespace GamehubPlugin.Core {
 
                 msg.sessions = new List<Session> {toSend};
                 msg.messageType = CommunicationMessageType.CURRENTSESSION;
-                onSession.Invoke(msg);
+                hubEvents.onSession.Invoke(msg);
             }
         }
 
@@ -106,14 +106,14 @@ namespace GamehubPlugin.Core {
 
         #region Wrapped methods
 
-        public void LoadSceneWrapped(int scene) {
+        public void LoadSceneWrapped(int scene, GameHubGame gameHubGame) {
             if (_loadedScene.buildIndex <= 0) {
-                StartCoroutine(LoadGame(scene));
+                playSessionRuns.Clear();
+                StartCoroutine(LoadGame(scene, gameHubGame));
             }
         }
 
         public void LoadSceneWrapped(GameHubGame game) {
-            m_Settings = SessionSettings.CreateInstance(game);
             int sceneNum;
 
 #if UNITY_EDITOR
@@ -124,7 +124,7 @@ namespace GamehubPlugin.Core {
 
 #endif
 
-            LoadSceneWrapped(sceneNum);
+            LoadSceneWrapped(sceneNum, game);
         }
 
         private void UnloadScene() {
@@ -139,7 +139,7 @@ namespace GamehubPlugin.Core {
             SendAllSessions();
             if (isGameRunning) {
                 UnloadScene();
-                onGameQuit.Invoke();
+                hubEvents.onGameQuit.Invoke();
             }
             else {
                 Debug.Log("Would now return to Gamehub ");
@@ -159,30 +159,27 @@ namespace GamehubPlugin.Core {
         }
 
         private void StartSessionWrapper() {
-            if (m_Settings != null) {
-                StartSessionWrapper(m_Settings.gameId, m_Settings.recordElmos);
-            }
-        }
-
-        private void StartSessionWrapper(int gameName, bool recordElmos) {
-            if (currSess != null) {
-                Debug.LogError("End current session before starting a new one");
-                return;
-            }
-
-            try {
-                m_CurrentManager = FindObjectOfType<MotionAIManager>();
-                if (overlay != null) {
-                    overlay.UpdateManager(m_CurrentManager);
+            if (loadedGame != null) {
+                if (currSess != null) {
+                    Debug.LogError("End current session before starting a new one");
+                    return;
                 }
 
-                currSess = new Session(gameName, recordElmos);
-                m_CurrentManager.controllerManager.onMovement.AddListener(SessionRecordCallback);
-            }
-            catch (Exception) {
-                Debug.LogError("No MotionAIManager present in scene ");
+                try {
+                    m_CurrentManager = FindObjectOfType<MotionAIManager>();
+                    if (overlay != null) {
+                        overlay.UpdateManager(m_CurrentManager);
+                    }
+
+                    currSess = new Session(loadedGame.gameId, loadedGame.recordElmos);
+                    m_CurrentManager.controllerManager.onMovement.AddListener(SessionRecordCallback);
+                }
+                catch (Exception) {
+                    Debug.LogError("No MotionAIManager present in scene ");
+                }
             }
         }
+
 
         private void SessionRecordCallback(EvoMovement mov) {
             if (overlay != null) {
@@ -246,6 +243,7 @@ namespace GamehubPlugin.Core {
             Session curr = GameHubManager.Instance.currSess;
             if (curr != null) {
                 curr.coinsCollected = coins;
+                GameHubManager.Instance.overlay.components.coins.text = $"{coins}";
             }
         }
 
@@ -257,6 +255,7 @@ namespace GamehubPlugin.Core {
             Session curr = GameHubManager.Instance.currSess;
             if (curr != null) {
                 curr.score = score;
+                GameHubManager.Instance.overlay.components.score.text = $"{score}";
             }
         }
 
@@ -265,6 +264,7 @@ namespace GamehubPlugin.Core {
         /// </summary>
         /// <param name="lives"></param>
         public static void SetLives(int currentLives) {
+            GameHubManager.Instance.overlay.components.coins.text = $"{currentLives}";
 //TODO implement
             return;
         }
