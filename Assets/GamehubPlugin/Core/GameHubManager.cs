@@ -260,6 +260,15 @@ namespace GamehubPlugin.Core {
             }
         }
 
+        /// <summary>
+        /// Updates the lives displayed in the overlay
+        /// </summary>
+        /// <param name="lives"></param>
+        public static void SetLives(int currentLives) {
+//TODO implement
+            return;
+        }
+
         #endregion
     }
 }
