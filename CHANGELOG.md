@@ -1,3 +1,10 @@
+## [1.1.13](https://github.com/Evomo/GameHubPlugin/compare/v1.1.12...v1.1.13) (2020-10-30)
+
+
+### Bug Fixes
+
+* added lives ([bbfdee7](https://github.com/Evomo/GameHubPlugin/commit/bbfdee7c7bb1a9cbb5f65fc44271aabbd1e5c9fe))
+
 ## [1.1.12](https://github.com/Evomo/GameHubPlugin/compare/v1.1.11...v1.1.12) (2020-10-30)
 
 
