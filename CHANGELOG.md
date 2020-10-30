@@ -1,3 +1,11 @@
+## [1.1.14](https://github.com/Evomo/GameHubPlugin/compare/v1.1.13...v1.1.14) (2020-10-30)
+
+
+### Bug Fixes
+
+* added assets ([11c8b10](https://github.com/Evomo/GameHubPlugin/commit/11c8b1007e35a028345a1a1d8c63d75647e2fbf9))
+* overlay logic ([d540c09](https://github.com/Evomo/GameHubPlugin/commit/d540c0921d5ea4521a38aa3fa0a7378dba852392))
+
 ## [1.1.13](https://github.com/Evomo/GameHubPlugin/compare/v1.1.12...v1.1.13) (2020-10-30)
 
 
