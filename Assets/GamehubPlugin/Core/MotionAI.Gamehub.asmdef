@@ -1,7 +1,8 @@
 {
     "name": "MotionAI.Gamehub",
     "references": [
-        "GUID:d6c83174c9952c944b4f431cc951f36f"
+        "GUID:d6c83174c9952c944b4f431cc951f36f",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

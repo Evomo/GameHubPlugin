@@ -13,6 +13,7 @@ namespace GamehubPlugin.Samples.GameLaunchDemo {
 
 		[SerializeField] private int sceneNum;
 
+		public GameHubGame testAsset;
 
 		public void Start() {
 			sceneNum = testScene == null ? 1 : BuildUtils.GetBuildScene(testScene.sceneAsset).buildIndex;
@@ -21,7 +22,7 @@ namespace GamehubPlugin.Samples.GameLaunchDemo {
 		public void Update() {
 			if (Input.GetKeyDown(KeyCode.Space)) {
 				Debug.Log("start");
-				GameHubManager.Instance.LoadSceneWrapped(sceneNum);
+				GameHubManager.Instance.LoadSceneWrapped(testAsset);
 			}
 
 			if (Input.GetKeyDown(KeyCode.A)) {

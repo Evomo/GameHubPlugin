@@ -6,17 +6,6 @@ using MotionAI.Core.POCO;
 using UnityEngine;
 
 namespace GamehubPlugin.Core {
-    public class SessionSettings {
-        public static SessionSettings CreateInstance(GameHubGame game) {
-            SessionSettings sess = new SessionSettings();
-            sess.gameId = game.gameId;
-            sess.recordElmos = game.recordElmos;
-            return sess;
-        }
-
-        public int gameId;
-        public bool recordElmos;
-    }
 
     [Serializable]
     public class Session {
