@@ -15,8 +15,8 @@ namespace GamehubPlugin.Core {
 
     [Serializable]
     public class HubEvents {
-        public UnityEvent onGameLoad, onGameQuit;
-        public HubSessionEvent onSession;
+        public UnityEvent onGameLoad;
+        public HubSessionEvent onSession, onGameOver;
     }
 
     public class GameHubManager : Singleton<GameHubManager> {
@@ -42,6 +42,7 @@ namespace GamehubPlugin.Core {
             }
 
             loadedGame = null;
+            overlay.events.onPause.AddListener(() => SendCurrentSession(currSess));
         }
 
         #endregion
@@ -91,13 +92,18 @@ namespace GamehubPlugin.Core {
             hubEvents.onSession.Invoke(msg);
         }
 
-        private void SendCurrentSession(Session toSend) {
+        private void SendCurrentSession(Session toSend, bool gameOver = false) {
             if (currSess != null) {
                 CommunicationMessages msg = new CommunicationMessages();
 
                 msg.sessions = new List<Session> {toSend};
                 msg.messageType = CommunicationMessageType.CURRENTSESSION;
-                hubEvents.onSession.Invoke(msg);
+                if (gameOver) {
+                    hubEvents.onGameOver.Invoke(msg);
+                }
+                else {
+                    hubEvents.onSession.Invoke(msg);
+                }
             }
         }
 
@@ -139,7 +145,6 @@ namespace GamehubPlugin.Core {
             SendAllSessions();
             if (isGameRunning) {
                 UnloadScene();
-                hubEvents.onGameQuit.Invoke();
             }
             else {
                 Debug.Log("Would now return to Gamehub ");
@@ -265,8 +270,6 @@ namespace GamehubPlugin.Core {
         /// <param name="lives"></param>
         public static void SetLives(int currentLives) {
             GameHubManager.Instance.overlay.components.coins.text = $"{currentLives}";
-//TODO implement
-            return;
         }
 
         #endregion

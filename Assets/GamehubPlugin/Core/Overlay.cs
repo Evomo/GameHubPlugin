@@ -14,15 +14,15 @@ namespace GamehubPlugin.Core {
         public Button pause;
         public GameObject gameScorePanel;
     }
-    
-
-
+    [Serializable]
+    public class OverlayEvents {
+        public UnityEvent onPause, onQuit;
+        
+    } 
     public class Overlay : Singleton<Overlay> {
-        [SerializeField] public OverlayObjects components;
         private MotionAIManager m_Manager;
-
-        public UnityEvent onPause, onEndSession;
-
+        [SerializeField] public OverlayObjects components;
+        [SerializeField] public OverlayEvents events;
         [SerializeField] private bool _isPaused;
 
         public bool IsPaused {
@@ -53,6 +53,7 @@ namespace GamehubPlugin.Core {
             components.scoreIcon.color = game.colors.scoreColor;
             components.pauseIcon.color = game.colors.backgroundColor;
             IsPaused = true;
+            Pause();
         }
 
         public void UpdateManager(MotionAIManager manager) {
@@ -63,6 +64,10 @@ namespace GamehubPlugin.Core {
             IsPaused = !IsPaused;
             if (m_Manager != null) {
                 m_Manager.isTracking = !IsPaused;
+                if (IsPaused) {
+                    events.onPause.Invoke();
+
+                }
             }
         }
 
@@ -82,6 +87,7 @@ namespace GamehubPlugin.Core {
             _isPaused = false;
             Time.timeScale = 0;
             //	IsPaused = true;
+
             components.gameScorePanel.SetActive(false);
         }
     }
