@@ -39,10 +39,12 @@ namespace GamehubPlugin.Core {
         public void Awake() {
             if (overlayPrefab != null) {
                 overlay = Instantiate(overlayPrefab).GetComponent<Overlay>();
+                overlay.events.onPause.AddListener(() => SendCurrentSession(currSess));
+                overlay.events.onQuit.AddListener(() => SendAllSessions());
+                
             }
 
             loadedGame = null;
-            overlay.events.onPause.AddListener(() => SendCurrentSession(currSess));
         }
 
         #endregion
@@ -60,6 +62,7 @@ namespace GamehubPlugin.Core {
             loadedGame = game;
             isGameRunning = true;
             hubEvents.onGameLoad.Invoke();
+            StartSession();
         }
 
 
@@ -269,7 +272,8 @@ namespace GamehubPlugin.Core {
         /// </summary>
         /// <param name="lives"></param>
         public static void SetLives(int currentLives) {
-            GameHubManager.Instance.overlay.components.coins.text = $"{currentLives}";
+            Overlay o = GameHubManager.Instance.overlay;
+            if (o != null) o.components.coins.text = $"{currentLives}";
         }
 
         #endregion

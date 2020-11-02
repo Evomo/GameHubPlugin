@@ -6,7 +6,6 @@ using MotionAI.Core.POCO;
 using UnityEngine;
 
 namespace GamehubPlugin.Core {
-
     [Serializable]
     public class Session {
         public DateTime StartTime;
@@ -55,11 +54,15 @@ namespace GamehubPlugin.Core {
         }
 
         public void RecordMovement(EvoMovement m) {
-            UpdateRecord(m.typeID, ref _mvDict);
             if (recordElmos) {
                 foreach (ElementalMovement elmo in m.elmos) {
-                    UpdateRecord(elmo.typeID, ref _elmoDict);
+                    if (!elmo.rejected) {
+                        UpdateRecord(elmo.typeID, ref _elmoDict);
+                    }
                 }
+            }
+            else {
+                UpdateRecord(m.typeID, ref _mvDict);
             }
         }
 
