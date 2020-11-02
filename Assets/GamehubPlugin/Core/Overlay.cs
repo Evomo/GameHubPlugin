@@ -7,6 +7,8 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace GamehubPlugin.Core {
+    #region Extra classes
+
     [Serializable]
     public class OverlayObjects {
         public Image panelBackground, scoreIcon, pauseIcon;
@@ -19,6 +21,8 @@ namespace GamehubPlugin.Core {
     public class OverlayEvents {
         public UnityEvent onPause, onQuit, onResume;
     }
+
+    #endregion
 
     public class Overlay : Singleton<Overlay> {
         private MotionAIManager m_Manager;
@@ -43,11 +47,6 @@ namespace GamehubPlugin.Core {
         }
 
 
-        public void Start() {
-            GameHubManager.Instance.hubEvents.onGameLoad.AddListener(() => IsPaused = true);
-        }
-
-
         public void ResetPanel(GameHubGame game) {
             components.coins.text = "0";
             components.lives.text = "0";
@@ -56,7 +55,6 @@ namespace GamehubPlugin.Core {
             components.scoreIcon.color = game.colors.scoreColor;
             components.pauseIcon.color = game.colors.backgroundColor;
             IsPaused = true;
-            Pause();
         }
 
         public void UpdateManager(MotionAIManager manager) {
@@ -67,7 +65,6 @@ namespace GamehubPlugin.Core {
             IsPaused = !IsPaused;
             if (m_Manager != null) {
                 m_Manager.isTracking = !IsPaused;
-
             }
         }
 
