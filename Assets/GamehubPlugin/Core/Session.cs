@@ -36,8 +36,6 @@ namespace GamehubPlugin.Core {
 
         public Session EndSession() {
             duration = (DateTime.Now - StartTime).TotalSeconds;
-            // score = sessionScore;
-            // coinsCollected = coins;
             movements = _mvDict.Values.ToArray();
             elmos = _elmoDict.Values.ToArray();
             return this;

@@ -10,8 +10,8 @@ namespace GamehubPlugin.Core {
         public CommunicationMessageType messageType;
 
         public override string ToString() {
-            if (sessions.Count == 1) {
-                return JsonUtility.ToJson(sessions.First());
+            if (messageType == CommunicationMessageType.CURRENTSESSION) {
+                return JsonUtility.ToJson(sessions.Last());
             }
 
             return JsonUtility.ToJson(sessions);

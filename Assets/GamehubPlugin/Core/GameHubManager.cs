@@ -25,6 +25,8 @@ namespace GamehubPlugin.Core {
 
         [SerializeField] private Overlay overlayPrefab;
         private Overlay overlay;
+        
+        [SerializeField]
         private MotionAIManager m_CurrentManager;
         private Session currSess;
 
@@ -62,7 +64,6 @@ namespace GamehubPlugin.Core {
             loadedGame = game;
             isGameRunning = true;
             hubEvents.onGameLoad.Invoke();
-            StartSession();
         }
 
 
