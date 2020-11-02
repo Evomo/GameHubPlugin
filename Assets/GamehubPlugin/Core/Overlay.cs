@@ -14,11 +14,12 @@ namespace GamehubPlugin.Core {
         public Button pause;
         public GameObject gameScorePanel;
     }
+
     [Serializable]
     public class OverlayEvents {
-        public UnityEvent onPause, onQuit;
-        
-    } 
+        public UnityEvent onPause, onQuit, onResume;
+    }
+
     public class Overlay : Singleton<Overlay> {
         private MotionAIManager m_Manager;
         [SerializeField] public OverlayObjects components;
@@ -29,19 +30,21 @@ namespace GamehubPlugin.Core {
             get { return _isPaused; }
             set {
                 if (_isPaused != value) {
-                    if (_isPaused) {
+                    if (!_isPaused) {
                         Pause();
                     }
                     else {
                         Resume();
                     }
+
+                    components.gameScorePanel.SetActive(!_isPaused);
                 }
             }
         }
 
 
         public void Start() {
-            GameHubManager.Instance.hubEvents.onGameLoad.AddListener(Pause);
+            GameHubManager.Instance.hubEvents.onGameLoad.AddListener(() => IsPaused = true);
         }
 
 
@@ -66,7 +69,6 @@ namespace GamehubPlugin.Core {
                 m_Manager.isTracking = !IsPaused;
                 if (IsPaused) {
                     events.onPause.Invoke();
-
                 }
             }
         }
@@ -74,21 +76,19 @@ namespace GamehubPlugin.Core {
         public void QuitGame() {
             Resume();
             GameHubManager.StopGame();
+            events.onQuit.Invoke();
         }
 
         public void Resume() {
-            _isPaused = true;
+            _isPaused = false;
             Time.timeScale = 1f;
-            //IsPaused = false;
-            components.gameScorePanel.SetActive(true);
+            events.onResume.Invoke();
         }
 
         public void Pause() {
-            _isPaused = false;
+            _isPaused = true;
             Time.timeScale = 0;
-            //	IsPaused = true;
-
-            components.gameScorePanel.SetActive(false);
+            events.onPause.Invoke();
         }
     }
 }
