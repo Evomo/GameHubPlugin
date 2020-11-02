@@ -67,9 +67,7 @@ namespace GamehubPlugin.Core {
             IsPaused = !IsPaused;
             if (m_Manager != null) {
                 m_Manager.isTracking = !IsPaused;
-                if (IsPaused) {
-                    events.onPause.Invoke();
-                }
+
             }
         }
 

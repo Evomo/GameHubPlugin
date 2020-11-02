@@ -35,8 +35,8 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 212.39, y: 50}
-  m_Pivot: {x: 0.1, y: 0.9}
+  m_SizeDelta: {x: 212.39001, y: 47.67}
+  m_Pivot: {x: 0.15, y: 0.9}
 --- !u!222 &6752882920697556037
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16.6
+  m_fontSize: 14.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -245,8 +245,8 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 212.39, y: 50}
-  m_Pivot: {x: 0.1, y: 0.9}
+  m_SizeDelta: {x: 212.39, y: 47.67}
+  m_Pivot: {x: 0.15, y: 0.9}
 --- !u!222 &8026280236141498721
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16.6
+  m_fontSize: 14.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -676,8 +676,8 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 212.39, y: 50}
-  m_Pivot: {x: 0.1, y: 0.9}
+  m_SizeDelta: {x: 212.39001, y: 47.67}
+  m_Pivot: {x: 0.15, y: 0.9}
 --- !u!222 &3141114718030164482
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -734,7 +734,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16.6
+  m_fontSize: 14.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1102,12 +1102,16 @@ MonoBehaviour:
     score: {fileID: 1103722345900963892}
     pause: {fileID: 6771337062599190213}
     gameScorePanel: {fileID: 8329424579558568815}
-  onPause:
-    m_PersistentCalls:
-      m_Calls: []
-  onEndSession:
-    m_PersistentCalls:
-      m_Calls: []
+  events:
+    onPause:
+      m_PersistentCalls:
+        m_Calls: []
+    onQuit:
+      m_PersistentCalls:
+        m_Calls: []
+    onResume:
+      m_PersistentCalls:
+        m_Calls: []
   _isPaused: 0
 --- !u!1 &8329424579558568815
 GameObject:
@@ -1148,7 +1152,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -0.00012207031, y: 0.000061035156}
-  m_SizeDelta: {x: 379.7, y: 348.76}
+  m_SizeDelta: {x: 339.35, y: 348.76}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &8015187868932000229
 CanvasRenderer:
