@@ -1,3 +1,10 @@
+## [1.1.17](https://github.com/Evomo/GameHubPlugin/compare/v1.1.16...v1.1.17) (2020-11-03)
+
+
+### Bug Fixes
+
+* added test changer ([bd0f2b2](https://github.com/Evomo/GameHubPlugin/commit/bd0f2b2f8c6d521798b82f394e1e4acc0e878d31))
+
 ## [1.1.16](https://github.com/Evomo/GameHubPlugin/compare/v1.1.15...v1.1.16) (2020-11-02)
 
 
