@@ -180,7 +180,7 @@ namespace GamehubPlugin.Core {
                         overlay.UpdateManager(m_CurrentManager);
                     }
 
-                    currSess = new Session(loadedGame.gameId, loadedGame.recordElmos);
+                    currSess = new Session(loadedGame);
                     m_CurrentManager.controllerManager.onMovement.AddListener(SessionRecordCallback);
                 }
                 catch (Exception) {

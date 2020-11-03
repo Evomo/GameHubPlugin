@@ -9,7 +9,7 @@ namespace GamehubPlugin.Core {
     [Serializable]
     public class Session {
         public DateTime StartTime;
-        public bool recordElmos;
+        public RecordType recordType;
         public int coinsCollected;
         public float score;
         public long timestamp;
@@ -21,13 +21,13 @@ namespace GamehubPlugin.Core {
         private Dictionary<MovementEnum, Record> _mvDict;
         private Dictionary<ElmoEnum, Record> _elmoDict;
 
-        public Session(int gameId, bool recordElmos = false) {
+        public Session(GameHubGame game) {
             _mvDict = new Dictionary<MovementEnum, Record>();
             _elmoDict = new Dictionary<ElmoEnum, Record>();
-            this.recordElmos = recordElmos;
+            this.recordType = game.recordType;
             StartTime = DateTime.Now;
             timestamp = ((DateTimeOffset) StartTime).ToUnixTimeSeconds();
-            this.gameId = gameId;
+            this.gameId = game.gameId;
         }
 
         public override string ToString() {
@@ -52,14 +52,15 @@ namespace GamehubPlugin.Core {
         }
 
         public void RecordMovement(EvoMovement m) {
-            if (recordElmos) {
+            if (recordType.HasFlag(RecordType.ElementalMove)) {
                 foreach (ElementalMovement elmo in m.elmos) {
                     if (!elmo.rejected) {
                         UpdateRecord(elmo.typeID, ref _elmoDict);
                     }
                 }
             }
-            else {
+
+            if (recordType.HasFlag(RecordType.Movements)) {
                 UpdateRecord(m.typeID, ref _mvDict);
             }
         }
