@@ -22,11 +22,17 @@ namespace GamehubPlugin.Core {
         Portrait
     }
 
+    [Flags]
+    public enum RecordType {
+        Movements = 1 << 0,
+        ElementalMove = 1 << 1
+    }
+
     public class GameHubGame : ScriptableObject {
         public SceneReference mainSceneReference;
         public string gameName;
         public string description;
-        public bool recordElmos;
+        public RecordType recordType;
         public int gameId;
         public DeviceOrientation screenOrientation;
         public ScorePanelColorScheme colors = new ScorePanelColorScheme();
