@@ -196,6 +196,15 @@ namespace GamehubPlugin.Core {
             }
         }
 
+        private Session EndSessionWrapped(int score, int coinsCollected) {
+            if (currSess != null) {
+                currSess.score = score;
+                currSess.coinsCollected = coinsCollected;
+            }
+
+            return EndSessionWrapped();
+        }
+
         private Session EndSessionWrapped() {
             Session toReturn = currSess;
             if (currSess != null) {
@@ -226,6 +235,13 @@ namespace GamehubPlugin.Core {
         public static void StartSession() {
             GameHubManager.Instance.StartSessionWrapper();
         }
+
+
+        public static void EndSession(int score, int coinsCollected) {
+            Session toSend = GameHubManager.Instance.EndSessionWrapped(score, coinsCollected);
+            GameHubManager.Instance.SendCurrentSession(toSend);
+        }
+
 
         /// <summary>
         /// Ends the session with the given parameters and stores them in a list for all the sessions played in a continuous use of the gamehub
