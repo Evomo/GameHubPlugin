@@ -1,3 +1,11 @@
+## [1.1.18](https://github.com/Evomo/GameHubPlugin/compare/v1.1.17...v1.1.18) (2020-11-03)
+
+
+### Bug Fixes
+
+* added recording type flag ([16b7c0a](https://github.com/Evomo/GameHubPlugin/commit/16b7c0a952396cab7647635dbbed62a7e908ad8d))
+* added sample asmdef ([fe8085f](https://github.com/Evomo/GameHubPlugin/commit/fe8085f05862a85487e5455e652708f5b6c474b8))
+
 ## [1.1.17](https://github.com/Evomo/GameHubPlugin/compare/v1.1.16...v1.1.17) (2020-11-03)
 
 
