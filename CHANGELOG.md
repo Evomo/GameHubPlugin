@@ -1,3 +1,10 @@
+## [1.1.19](https://github.com/Evomo/GameHubPlugin/compare/v1.1.18...v1.1.19) (2020-11-03)
+
+
+### Bug Fixes
+
+* updated api for ending session ([f2cef41](https://github.com/Evomo/GameHubPlugin/commit/f2cef414fb46bafba8b6cf52d4ae38046314ebab))
+
 ## [1.1.18](https://github.com/Evomo/GameHubPlugin/compare/v1.1.17...v1.1.18) (2020-11-03)
 
 
