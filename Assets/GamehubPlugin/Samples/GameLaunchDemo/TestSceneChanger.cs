@@ -5,37 +5,24 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace GamehubPlugin.Samples.GameLaunchDemo {
-	public class TestSceneChanger : MonoBehaviour {
+    public class TestSceneChanger : MonoBehaviour {
 #if UNITY_EDITOR
-		[Tooltip(
-			"Optional scene to test how it'll behave in the gamehub, will load the scene in build index 1 if left null")]
-		public SceneReference testScene;
-
-		[SerializeField] private int sceneNum;
-
-		public GameHubGame testAsset;
-
-		public void Start() {
-			sceneNum = testScene == null ? 1 : BuildUtils.GetBuildScene(testScene.sceneAsset).buildIndex;
-		}
-
-		public void Update() {
-			if (Input.GetKeyDown(KeyCode.Space)) {
-				Debug.Log("start");
-				GameHubManager.Instance.LoadSceneWrapped(testAsset);
-			}
-
-			if (Input.GetKeyDown(KeyCode.A)) {
-				Debug.Log("stop");
-				GameHubManager.StopGame();
-			}
 
 
-			if (Input.GetKeyDown(KeyCode.S)) {
-				Debug.Log("restarting");
-				GameHubManager.ResetGame();
-			}
-		}
+        public GameHubGame testAsset;
+
+        public void LoadGame() {
+            GameHubManager.Instance.LoadSceneWrapped(testAsset);
+        }
+
+        public void Restart() {
+            GameHubManager.ResetGame();
+        }
+
+
+        public void StopGame() {
+            GameHubManager.StopGame();
+        }
 #endif
-	}
+    }
 }
