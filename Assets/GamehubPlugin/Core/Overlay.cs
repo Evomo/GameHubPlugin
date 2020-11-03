@@ -70,7 +70,6 @@ namespace GamehubPlugin.Core {
 
         public void QuitGame() {
             Resume();
-            GameHubManager.StopGame();
             events.onQuit.Invoke();
         }
 

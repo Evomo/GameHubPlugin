@@ -36,7 +36,7 @@ namespace GamehubPlugin.Core {
         public int gameId;
         public DeviceOrientation screenOrientation;
         public ScorePanelColorScheme colors = new ScorePanelColorScheme();
-
+        
 
         public RenderPipelineAsset scriptableRenderAsset;
 #if UNITY_EDITOR

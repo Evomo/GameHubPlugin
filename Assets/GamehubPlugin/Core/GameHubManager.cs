@@ -25,9 +25,8 @@ namespace GamehubPlugin.Core {
 
         [SerializeField] private Overlay overlayPrefab;
         private Overlay overlay;
-        
-        [SerializeField]
-        private MotionAIManager m_CurrentManager;
+
+        [SerializeField] private MotionAIManager m_CurrentManager;
         private Session currSess;
 
         private List<Session> playSessionRuns = new List<Session>();
@@ -43,7 +42,6 @@ namespace GamehubPlugin.Core {
                 overlay = Instantiate(overlayPrefab).GetComponent<Overlay>();
                 overlay.events.onPause.AddListener(() => SendCurrentSession(currSess));
                 overlay.events.onQuit.AddListener(() => SendAllSessions());
-                
             }
 
             loadedGame = null;
@@ -241,7 +239,8 @@ namespace GamehubPlugin.Core {
         /// Stops the game and returns to the main app
         /// </summary>
         public static void StopGame() {
-            GameHubManager.Instance.QuitGame();
+            Overlay o = GameHubManager.Instance.overlay;
+            if (o != null) o.QuitGame();
         }
 
         /// <summary>
@@ -275,6 +274,22 @@ namespace GamehubPlugin.Core {
         public static void SetLives(int currentLives) {
             Overlay o = GameHubManager.Instance.overlay;
             if (o != null) o.components.coins.text = $"{currentLives}";
+        }
+
+
+        public static void Pause() {
+            Overlay o = GameHubManager.Instance.overlay;
+            if (o != null) o.Pause();
+        }
+
+        public static void Resume() {
+            Overlay o = GameHubManager.Instance.overlay;
+            if (o != null) o.Resume();
+        }
+
+        public static void Quit() {
+            Overlay o = GameHubManager.Instance.overlay;
+            if (o != null) o.QuitGame();
         }
 
         #endregion
