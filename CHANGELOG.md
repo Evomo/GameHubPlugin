@@ -1,3 +1,10 @@
+## [1.1.16](https://github.com/Evomo/GameHubPlugin/compare/v1.1.15...v1.1.16) (2020-11-02)
+
+
+### Bug Fixes
+
+* added region ([96ce7b8](https://github.com/Evomo/GameHubPlugin/commit/96ce7b8d55ec0cbb7cc8334768086abed09bb2d2))
+
 ## [1.1.15](https://github.com/Evomo/GameHubPlugin/compare/v1.1.14...v1.1.15) (2020-10-30)
 
 
