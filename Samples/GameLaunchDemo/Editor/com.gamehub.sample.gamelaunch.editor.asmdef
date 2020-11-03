@@ -1,0 +1,18 @@
+{
+    "name": "com.gamehub.sample.gamelaunch.editor",
+    "references": [
+        "GUID:c7695eae80a91ad49b386abccfb17db2",
+        "GUID:a7edfe8d70fa914489ae8c3b9ae82a4b"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
