@@ -11,28 +11,20 @@ using UnityEngine.SceneManagement;
 
 namespace GamehubPlugin.Core {
     [Serializable]
-    public class HubSessionEvent : UnityEvent<CommunicationMessages> { }
-
-    [Serializable]
-    public class HubEvents {
-        public UnityEvent onGameLoad;
-        public HubSessionEvent onSession, onGameOver;
-    }
 
     public class GameHubManager : Singleton<GameHubManager> {
         private Scene _loadedScene;
 
 
+        private bool _hasNotifiedApp;
         [SerializeField] private Overlay overlayPrefab;
         private Overlay overlay;
 
         [SerializeField] private MotionAIManager m_CurrentManager;
         private Session currSess;
 
-        private List<Session> playSessionRuns = new List<Session>();
         public GameHubGame loadedGame;
 
-        [SerializeField] public HubEvents hubEvents = new HubEvents();
         public bool isGameRunning { get; private set; }
 
         #region Unity Lifecycle
@@ -41,7 +33,6 @@ namespace GamehubPlugin.Core {
             if (overlayPrefab != null) {
                 overlay = Instantiate(overlayPrefab).GetComponent<Overlay>();
                 overlay.events.onPause.AddListener(() => SendCurrentSession(currSess));
-                overlay.events.onQuit.AddListener(() => SendAllSessions());
             }
 
             loadedGame = null;
@@ -61,7 +52,6 @@ namespace GamehubPlugin.Core {
             overlay.ResetPanel(game);
             loadedGame = game;
             isGameRunning = true;
-            hubEvents.onGameLoad.Invoke();
         }
 
 
@@ -70,7 +60,10 @@ namespace GamehubPlugin.Core {
             yield return new WaitUntil(() => asyncLoad.isDone);
 
             isGameRunning = false;
+            _hasNotifiedApp = false;
             loadedGame = null;
+            m_CurrentManager = null;
+
             _loadedScene = SceneManager.GetSceneByBuildIndex(0);
         }
 
@@ -85,26 +78,14 @@ namespace GamehubPlugin.Core {
 
         #region App communication
 
-        private void SendAllSessions() {
-            CommunicationMessages msg = new CommunicationMessages();
-
-            msg.sessions = playSessionRuns;
-            msg.messageType = CommunicationMessageType.ENDGAME;
-
-            hubEvents.onSession.Invoke(msg);
-        }
-
         private void SendCurrentSession(Session toSend, bool gameOver = false) {
             if (currSess != null) {
                 CommunicationMessages msg = new CommunicationMessages();
 
-                msg.sessions = new List<Session> {toSend};
-                msg.messageType = CommunicationMessageType.CURRENTSESSION;
-                if (gameOver) {
-                    hubEvents.onGameOver.Invoke(msg);
-                }
-                else {
-                    hubEvents.onSession.Invoke(msg);
+                msg.session = toSend;
+                msg.messageType = gameOver ? CommunicationMessageType.GAMEOVER : CommunicationMessageType.PAUSE;
+                if (m_CurrentManager != null) {
+                    m_CurrentManager.SendGameHubMessage(msg.ToString());
                 }
             }
         }
@@ -113,13 +94,6 @@ namespace GamehubPlugin.Core {
 
 
         #region Wrapped methods
-
-        public void LoadSceneWrapped(int scene, GameHubGame gameHubGame) {
-            if (_loadedScene.buildIndex <= 0) {
-                playSessionRuns.Clear();
-                StartCoroutine(LoadGame(scene, gameHubGame));
-            }
-        }
 
         public void LoadSceneWrapped(GameHubGame game) {
             int sceneNum;
@@ -132,21 +106,18 @@ namespace GamehubPlugin.Core {
 
 #endif
 
-            LoadSceneWrapped(sceneNum, game);
-        }
-
-        private void UnloadScene() {
-            playSessionRuns.Clear();
-            if (_loadedScene.buildIndex > 0) {
-                StartCoroutine(UnloadGame());
+            if (_loadedScene.buildIndex <= 0) {
+                StartCoroutine(LoadGame(sceneNum, game));
+                StartSessionWrapper();
             }
         }
 
 
         private void QuitGame() {
-            SendAllSessions();
             if (isGameRunning) {
-                UnloadScene();
+                if (_loadedScene.buildIndex > 0) {
+                    StartCoroutine(UnloadGame());
+                }
             }
             else {
                 Debug.Log("Would now return to Gamehub ");
@@ -160,6 +131,8 @@ namespace GamehubPlugin.Core {
             }
 
             if (_loadedScene.buildIndex > 0) {
+                SendCurrentSession(currSess, true);
+
                 StartCoroutine(ResetGameCoroutine());
                 StartSessionWrapper();
             }
@@ -174,6 +147,14 @@ namespace GamehubPlugin.Core {
 
                 try {
                     m_CurrentManager = FindObjectOfType<MotionAIManager>();
+
+                    if (!_hasNotifiedApp) {
+                        CommunicationMessages cm = new CommunicationMessages();
+                        cm.messageType = CommunicationMessageType.GAMELOADED;
+                        m_CurrentManager.SendGameHubMessage(cm.ToString());
+                        _hasNotifiedApp = true;
+                    }
+
                     if (overlay != null) {
                         overlay.UpdateManager(m_CurrentManager);
                     }
@@ -209,7 +190,6 @@ namespace GamehubPlugin.Core {
             Session toReturn = currSess;
             if (currSess != null) {
                 toReturn = currSess?.EndSession();
-                playSessionRuns.Add(toReturn);
                 Debug.Log(currSess.ToString());
             }
 
@@ -295,17 +275,32 @@ namespace GamehubPlugin.Core {
 
         public static void Pause() {
             Overlay o = GameHubManager.Instance.overlay;
-            if (o != null) o.Pause();
+            if (o != null) {
+                o.Pause();
+            }
+            else {
+                Debug.LogWarning("No Overlay, but would pause now");
+            }
         }
 
         public static void Resume() {
             Overlay o = GameHubManager.Instance.overlay;
-            if (o != null) o.Resume();
+            if (o != null) {
+                o.Resume();
+            }
+            else {
+                Debug.LogWarning("No Overlay, but would resume game now ");
+            }
         }
 
         public static void Quit() {
             Overlay o = GameHubManager.Instance.overlay;
-            if (o != null) o.QuitGame();
+            if (o != null) {
+                o.QuitGame();
+            }
+            else {
+                Debug.LogWarning("No Overlay, but would quit game ");
+            }
         }
 
         #endregion
