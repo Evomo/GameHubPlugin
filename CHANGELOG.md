@@ -1,3 +1,10 @@
+## [1.1.20](https://github.com/Evomo/GameHubPlugin/compare/v1.1.19...v1.1.20) (2020-11-05)
+
+
+### Bug Fixes
+
+* message handling ([5df0910](https://github.com/Evomo/GameHubPlugin/commit/5df0910cd25398a78875392ceda7f44be0d920b2))
+
 ## [1.1.19](https://github.com/Evomo/GameHubPlugin/compare/v1.1.18...v1.1.19) (2020-11-03)
 
 
