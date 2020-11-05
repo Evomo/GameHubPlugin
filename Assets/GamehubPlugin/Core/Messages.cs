@@ -5,21 +5,23 @@ using UnityEngine;
 
 namespace GamehubPlugin.Core {
     [Serializable]
-    public class CommunicationMessages {
-        public List<Session> sessions;
+    public struct CommunicationMessages {
+        public Session session;
+
         public CommunicationMessageType messageType;
 
         public override string ToString() {
-            if (messageType == CommunicationMessageType.CURRENTSESSION) {
-                return JsonUtility.ToJson(sessions.Last());
-            }
-
-            return JsonUtility.ToJson(sessions);
+            return $@"{{
+                ""gameSession"" :{session.ToString()},
+                ""messageType"": {Enum.GetName(typeof(CommunicationMessageType), messageType)}
+        }}";
+            return JsonUtility.ToJson(session);
         }
     }
 
     public enum CommunicationMessageType {
-        ENDGAME,
-        CURRENTSESSION
+        PAUSE,
+        GAMEOVER,
+        GAMELOADED
     }
 }

@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "com.unity.render-pipelines.universal": "8.2.0",
-    "com.evomo.motionai": "1.2.10"
+    "com.evomo.motionai": "1.2.12"
   },
   "author": {
     "name": "Evomo",
