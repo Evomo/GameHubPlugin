@@ -107,7 +107,7 @@ namespace GamehubPlugin.Core {
             }
 #endif
 #if !UNITY_EDITOR
-			sceneNum = SceneManager.GetSceneByPath(game.mainSceneReference.ScenePath).buildIndex;
+			sceneNum =             SceneUtility.GetBuildIndexByScenePath(game.mainSceneReference.ScenePath);
 
 #endif
 
@@ -117,7 +117,12 @@ namespace GamehubPlugin.Core {
             }
         }
 
-
+        public static string GetSceneNameFromBuildIndex(int index) {
+            string scenePath = SceneUtility.GetScenePathByBuildIndex(index);
+            string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
+ 
+            return sceneName;
+        }
         private void QuitGame() {
             if (isGameRunning) {
                 if (_loadedScene.buildIndex > 0) {
