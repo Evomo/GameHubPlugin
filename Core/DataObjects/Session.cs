@@ -52,7 +52,8 @@ namespace GamehubPlugin.Core {
         }
 
         public void RecordMovement(EvoMovement m) {
-            if (recordType.HasFlag(RecordType.ElementalMove)) {
+            bool overrideFlag = recordType == 0;
+            if (recordType.HasFlag(RecordType.ElementalMove) || overrideFlag ) {
                 foreach (ElementalMovement elmo in m.elmos) {
                     if (!elmo.rejected) {
                         UpdateRecord(elmo.typeID, ref _elmoDict);
@@ -60,7 +61,7 @@ namespace GamehubPlugin.Core {
                 }
             }
 
-            if (recordType.HasFlag(RecordType.Movements)) {
+            if (recordType.HasFlag(RecordType.Movements) || overrideFlag) {
                 UpdateRecord(m.typeID, ref _mvDict);
             }
         }

@@ -1,21 +1,12 @@
 ﻿using System;
+using GamehubPlugin.Core.OverlaySpace;
 using MotionAI.Core.Controller;
 using MotionAI.Core.Util;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace GamehubPlugin.Core {
     #region Extra classes
-
-    [Serializable]
-    public class OverlayObjects {
-        public Image panelBackground, scoreIcon, pauseIcon;
-        public TextMeshProUGUI coins, lives, score;
-        public Button pause;
-        public GameObject gameScorePanel;
-    }
 
     [Serializable]
     public class OverlayEvents {
@@ -25,10 +16,15 @@ namespace GamehubPlugin.Core {
     #endregion
 
     public class Overlay : Singleton<Overlay> {
-        private MotionAIManager m_Manager;
-        [SerializeField] public OverlayObjects components;
+        [SerializeField] private OverlayPanel vertical, horizontal;
         [SerializeField] public OverlayEvents events;
         [SerializeField] private bool _isPaused;
+
+        private MotionAIManager m_Manager;
+        
+        public OverlayPanel activePanel;
+
+        private bool _isPanelActive;
 
         public bool IsPaused {
             get { return _isPaused; }
@@ -41,19 +37,32 @@ namespace GamehubPlugin.Core {
                         Resume();
                     }
 
-                    components.gameScorePanel.SetActive(!_isPaused);
+                    if (_isPanelActive) {
+                        activePanel.gameObject.SetActive(!_isPaused);
+                    }
                 }
             }
         }
 
+        private void ResetPanel(OverlayPanel p, ScorePanelColorScheme cs) {
+            p.coins.text = "0";
+            p.lives.text = "0";
+            p.score.text = "0";
+            p.panelBackground.color = cs.backgroundColor;
+            p.scoreIcon.color = cs.scoreColor;
+            p.pauseIcon.color = cs.backgroundColor;
+            p.gameObject.SetActive(false);
+        }
 
         public void ResetPanel(GameHubGame game) {
-            components.coins.text = "0";
-            components.lives.text = "0";
-            components.score.text = "0";
-            components.panelBackground.color = game.colors.backgroundColor;
-            components.scoreIcon.color = game.colors.scoreColor;
-            components.pauseIcon.color = game.colors.backgroundColor;
+            ScorePanelColorScheme cs = game.overlayOptions.colorScheme;
+
+            ResetPanel(vertical, cs);
+            ResetPanel(horizontal, cs);
+
+            _isPanelActive = game.overlayOptions.useOverlay;
+            activePanel = game.overlayOptions.overlayType == OverlayType.Horizontal ? horizontal : vertical;
+            
             IsPaused = true;
         }
 
