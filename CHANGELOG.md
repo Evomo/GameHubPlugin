@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/Evomo/GameHubPlugin/compare/v1.1.20...v1.2.0) (2020-11-09)
+
+
+### Features
+
+* added overlay options and refactor ([71dda6d](https://github.com/Evomo/GameHubPlugin/commit/71dda6d2f7f250fac3f83fb783af1c6d8b991938))
+
 ## [1.1.20](https://github.com/Evomo/GameHubPlugin/compare/v1.1.19...v1.1.20) (2020-11-05)
 
 
