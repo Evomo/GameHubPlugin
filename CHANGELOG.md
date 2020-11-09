@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/Evomo/GameHubPlugin/compare/v1.2.0...v1.2.1) (2020-11-09)
+
+
+### Bug Fixes
+
+* loading games works now ([df7709c](https://github.com/Evomo/GameHubPlugin/commit/df7709c8c2b6d840a802d7447c6bac0432aaf02a))
+
 # [1.2.0](https://github.com/Evomo/GameHubPlugin/compare/v1.1.20...v1.2.0) (2020-11-09)
 
 
