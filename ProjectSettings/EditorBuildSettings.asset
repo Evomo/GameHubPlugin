@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/GamehubPlugin/Samples/GameLaunchDemo/StartScene.unity
+    path: Assets/GamehubPlugin/Samples/GameLaunchDemo/Container Scene.unity
     guid: f8fb0446c907929429684cf3262e0aef
   - enabled: 1
-    path: Assets/GamehubPlugin/Samples/GameLaunchDemo/EndScene.unity
-    guid: 0feecf998dc8eea4d9b9d926afc214a3
+    path: Assets/GamehubPlugin/Samples/GameLaunchDemo/Game Scene.unity
+    guid: 83ca8756ac0cb0e48b3d4b689c2ca2b8
   m_configObjects: {}
