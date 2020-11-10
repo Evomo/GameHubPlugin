@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/Evomo/GameHubPlugin/compare/v1.2.3...v1.2.4) (2020-11-10)
+
+
+### Bug Fixes
+
+* empty movements are not processed in session ([1f96c3a](https://github.com/Evomo/GameHubPlugin/commit/1f96c3a9cc85a1768c00d1e44d3fe9a89acf8cf0))
+
 ## [1.2.3](https://github.com/Evomo/GameHubPlugin/compare/v1.2.2...v1.2.3) (2020-11-10)
 
 
