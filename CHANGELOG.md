@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/Evomo/GameHubPlugin/compare/v1.2.1...v1.2.2) (2020-11-10)
+
+
+### Bug Fixes
+
+* message passing bug, api change ([16105f6](https://github.com/Evomo/GameHubPlugin/commit/16105f69a44a6bbba75f587f8eec6cf9c0e0fe36))
+
 ## [1.2.1](https://github.com/Evomo/GameHubPlugin/compare/v1.2.0...v1.2.1) (2020-11-09)
 
 
