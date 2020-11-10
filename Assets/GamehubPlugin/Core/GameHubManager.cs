@@ -34,7 +34,7 @@ namespace GamehubPlugin.Core {
             }
 
             _overlay = Instantiate(overlayPrefab).GetComponent<Overlay>();
-            _overlay.events.onPause.AddListener(() => SendCurrentSession(_currSess));
+            _overlay.events.onPause.AddListener(() => SendCurrentSession());
 
             loadedGame = null;
         }
@@ -53,6 +53,7 @@ namespace GamehubPlugin.Core {
             _overlay.ResetPanel(game);
             loadedGame = game;
             isGameRunning = true;
+            StartSessionWrapper();
         }
 
 
@@ -79,11 +80,11 @@ namespace GamehubPlugin.Core {
 
         #region App communication
 
-        private void SendCurrentSession(Session toSend, bool gameOver = false) {
+        private void SendCurrentSession(bool gameOver = false) {
             if (_currSess != null) {
                 CommunicationMessages msg = new CommunicationMessages();
 
-                msg.session = toSend;
+                msg.session = _currSess.EndSession();
                 msg.messageType = gameOver ? CommunicationMessageType.GAMEOVER : CommunicationMessageType.PAUSE;
                 if (m_CurrentManager != null) {
                     m_CurrentManager.SendGameHubMessage(msg.ToString());
@@ -107,7 +108,7 @@ namespace GamehubPlugin.Core {
             }
 #endif
 #if !UNITY_EDITOR
-			sceneNum =             SceneUtility.GetBuildIndexByScenePath(game.mainSceneReference.ScenePath);
+			sceneNum = SceneUtility.GetBuildIndexByScenePath(game.mainSceneReference.ScenePath);
 
 #endif
 
@@ -120,9 +121,10 @@ namespace GamehubPlugin.Core {
         public static string GetSceneNameFromBuildIndex(int index) {
             string scenePath = SceneUtility.GetScenePathByBuildIndex(index);
             string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
- 
+
             return sceneName;
         }
+
         private void QuitGame() {
             if (isGameRunning) {
                 if (_loadedScene.buildIndex > 0) {
@@ -141,10 +143,9 @@ namespace GamehubPlugin.Core {
             }
 
             if (_loadedScene.buildIndex > 0) {
-                SendCurrentSession(_currSess, true);
+                SendCurrentSession(true);
 
                 StartCoroutine(ResetGameCoroutine());
-                StartSessionWrapper();
             }
         }
 
@@ -157,9 +158,11 @@ namespace GamehubPlugin.Core {
 
                 try {
                     m_CurrentManager = FindObjectOfType<MotionAIManager>();
+                    _currSess = new Session(loadedGame);
 
                     if (!_hasNotifiedApp) {
                         CommunicationMessages cm = new CommunicationMessages();
+                        cm.session = _currSess;
                         cm.messageType = CommunicationMessageType.GAMELOADED;
                         m_CurrentManager.SendGameHubMessage(cm.ToString());
                         _hasNotifiedApp = true;
@@ -169,7 +172,6 @@ namespace GamehubPlugin.Core {
                         _overlay.UpdateManager(m_CurrentManager);
                     }
 
-                    _currSess = new Session(loadedGame);
                     m_CurrentManager.controllerManager.onMovement.AddListener(SessionRecordCallback);
                 }
                 catch (Exception) {
@@ -187,24 +189,21 @@ namespace GamehubPlugin.Core {
             }
         }
 
-        private Session EndSessionWrapped(int score, int coinsCollected) {
+        private void EndSessionWrapped(int score, int coinsCollected) {
             if (_currSess != null) {
                 _currSess.score = score;
                 _currSess.coinsCollected = coinsCollected;
             }
 
-            return EndSessionWrapped();
+            EndSessionWrapped();
         }
 
-        private Session EndSessionWrapped() {
-            Session toReturn = _currSess;
+        private void EndSessionWrapped() {
             if (_currSess != null) {
-                toReturn = _currSess?.EndSession();
-                Debug.Log(_currSess.ToString());
+                SendCurrentSession(gameOver: true);
             }
 
             _currSess = null;
-            return toReturn;
         }
 
         #endregion
@@ -219,17 +218,8 @@ namespace GamehubPlugin.Core {
         }
 
 
-        /// <summary>
-        /// Function that tells the manager to start recording movements
-        /// </summary>
-        public static void StartSession() {
-            GameHubManager.Instance.StartSessionWrapper();
-        }
-
-
         public static void EndSession(int score, int coinsCollected) {
-            Session toSend = GameHubManager.Instance.EndSessionWrapped(score, coinsCollected);
-            GameHubManager.Instance.SendCurrentSession(toSend);
+            GameHubManager.Instance.EndSessionWrapped(score, coinsCollected);
         }
 
 
@@ -237,8 +227,7 @@ namespace GamehubPlugin.Core {
         /// Ends the session with the given parameters and stores them in a list for all the sessions played in a continuous use of the gamehub
         /// </summary>
         public static void EndSession() {
-            Session toSend = GameHubManager.Instance.EndSessionWrapped();
-            GameHubManager.Instance.SendCurrentSession(toSend);
+            GameHubManager.Instance.EndSessionWrapped();
         }
 
         /// <summary>
