@@ -62,7 +62,7 @@ namespace GamehubPlugin.Core {
             }
 
             if (recordType.HasFlag(RecordType.Movements) || overrideFlag) {
-                UpdateRecord(m.typeID, ref _mvDict);
+                if(m.typeID != 0 )UpdateRecord(m.typeID, ref _mvDict);
             }
         }
 
