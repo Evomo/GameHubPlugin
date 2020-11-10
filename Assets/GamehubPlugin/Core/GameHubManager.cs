@@ -137,11 +137,6 @@ namespace GamehubPlugin.Core {
         }
 
         private void ResetScene() {
-            if (_currSess != null) {
-                Debug.LogError("Can't reset the scene without ending the session");
-                return;
-            }
-
             if (_loadedScene.buildIndex > 0) {
                 SendCurrentSession(true);
 
