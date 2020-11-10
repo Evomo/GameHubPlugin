@@ -11,10 +11,7 @@ namespace GamehubPlugin.Core {
         public CommunicationMessageType messageType;
 
         public override string ToString() {
-            string s = $@"{{
-                ""gameSession"" :{session.ToString()},
-                ""messageType"": {Enum.GetName(typeof(CommunicationMessageType), messageType)}
-        }}";
+            string s = $@"{{""gameSession"" :{session.ToString()},""messageType"": ""{Enum.GetName(typeof(CommunicationMessageType), messageType)}""}}";
             return s;
         }
     }
