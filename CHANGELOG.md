@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/Evomo/GameHubPlugin/compare/v1.2.4...v1.2.5) (2020-11-12)
+
+
+### Bug Fixes
+
+* added zero alloc panel ([f8c708b](https://github.com/Evomo/GameHubPlugin/commit/f8c708b5c34bd404dfb1b6d33f25810210339a7d))
+
 ## [1.2.4](https://github.com/Evomo/GameHubPlugin/compare/v1.2.3...v1.2.4) (2020-11-10)
 
 
