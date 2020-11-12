@@ -74,7 +74,7 @@ namespace GamehubPlugin.Core {
             ResetPanel(horizontal, cs);
 
             _isPanelActive = game.overlayOptions.useOverlay;
-            activePanel = game.overlayOptions.deviceOrientation == DeviceOrientation.Horizontal ? horizontal : vertical;
+            activePanel = game.overlayOptions.menuType == DeviceOrientation.Horizontal ? horizontal : vertical;
 
             IsPaused = true;
         }

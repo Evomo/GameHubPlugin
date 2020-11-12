@@ -35,7 +35,7 @@ namespace GamehubPlugin.Core {
     [Serializable]
     public class OverlayOptions {
         public ScorePanelColorScheme colorScheme = new ScorePanelColorScheme();
-        public DeviceOrientation deviceOrientation;
+        public DeviceOrientation menuType;
         public bool useOverlay = true;
     };
 
