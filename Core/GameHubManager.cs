@@ -14,7 +14,7 @@ namespace GamehubPlugin.Core {
     public class GameHubManager : Singleton<GameHubManager> {
         private bool _hasNotifiedApp;
 
-        private Overlay _overlay;
+        [SerializeField] private Overlay _overlay;
         private Session _currSess;
         private Scene _loadedScene;
 
@@ -29,13 +29,18 @@ namespace GamehubPlugin.Core {
         #region Unity Lifecycle
 
         public void Awake() {
-            if (overlayPrefab == null) {
-                overlayPrefab = Resources.Load<Overlay>("Overlay");
+            _overlay = GetComponentInChildren<Overlay>();
+
+            if (_overlay == null) {
+                if (overlayPrefab == null) {
+                    overlayPrefab = Resources.Load<Overlay>("Overlay");
+                    _overlay = Instantiate(overlayPrefab).GetComponent<Overlay>();
+                    _overlay.transform.SetParent(transform);
+                }
             }
 
-            _overlay = Instantiate(overlayPrefab).GetComponent<Overlay>();
-            _overlay.events.onPause.AddListener(() => SendCurrentSession());
 
+            _overlay.events.onPause.AddListener(() => SendCurrentSession());
             loadedGame = null;
         }
 
@@ -241,7 +246,8 @@ namespace GamehubPlugin.Core {
             Session curr = GameHubManager.Instance._currSess;
             if (curr != null) {
                 curr.coinsCollected = coins;
-                GameHubManager.Instance._overlay.activePanel.coins.text = $"{coins}";
+                Overlay o = GameHubManager.Instance._overlay;
+                if (o != null) o.UpdatePanelValue(OverlayPanelEnum.COINS, coins);
             }
         }
 
@@ -253,7 +259,8 @@ namespace GamehubPlugin.Core {
             Session curr = GameHubManager.Instance._currSess;
             if (curr != null) {
                 curr.score = score;
-                GameHubManager.Instance._overlay.activePanel.score.text = $"{score}";
+                Overlay o = GameHubManager.Instance._overlay;
+                if (o != null) o.UpdatePanelValue(OverlayPanelEnum.SCORE, score);
             }
         }
 
@@ -263,7 +270,7 @@ namespace GamehubPlugin.Core {
         /// <param name="lives"></param>
         public static void SetLives(int currentLives) {
             Overlay o = GameHubManager.Instance._overlay;
-            if (o != null) o.activePanel.coins.text = $"{currentLives}";
+            if (o != null) o.UpdatePanelValue(OverlayPanelEnum.LIVES, currentLives);
         }
 
 

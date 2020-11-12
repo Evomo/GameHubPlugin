@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Text;
 using GamehubPlugin.Core.OverlaySpace;
 using MotionAI.Core.Controller;
 using MotionAI.Core.Util;
@@ -13,15 +14,23 @@ namespace GamehubPlugin.Core {
         public UnityEvent onPause, onQuit, onResume;
     }
 
+
+    public enum OverlayPanelEnum {
+        LIVES,
+        SCORE,
+        COINS
+    }
+
     #endregion
 
-    public class Overlay : Singleton<Overlay> {
+    [RequireComponent(typeof(GameHubManager))]
+    public class Overlay : MonoBehaviour {
         [SerializeField] private OverlayPanel vertical, horizontal;
         [SerializeField] public OverlayEvents events;
         [SerializeField] private bool _isPaused;
 
         private MotionAIManager m_Manager;
-        
+
         public OverlayPanel activePanel;
 
         private bool _isPanelActive;
@@ -44,6 +53,10 @@ namespace GamehubPlugin.Core {
             }
         }
 
+        private void Start() {
+            activePanel = vertical;
+        }
+
         private void ResetPanel(OverlayPanel p, ScorePanelColorScheme cs) {
             p.coins.text = "0";
             p.lives.text = "0";
@@ -61,8 +74,8 @@ namespace GamehubPlugin.Core {
             ResetPanel(horizontal, cs);
 
             _isPanelActive = game.overlayOptions.useOverlay;
-            activePanel = game.overlayOptions.overlayType == OverlayType.Horizontal ? horizontal : vertical;
-            
+            activePanel = game.overlayOptions.deviceOrientation == DeviceOrientation.Horizontal ? horizontal : vertical;
+
             IsPaused = true;
         }
 
@@ -74,6 +87,26 @@ namespace GamehubPlugin.Core {
             IsPaused = !IsPaused;
             if (m_Manager != null) {
                 m_Manager.isTracking = !IsPaused;
+            }
+        }
+
+
+        public void UpdatePanelValue<T>(OverlayPanelEnum toChange, T value) {
+            if (activePanel != null) {
+                using (var sb = ZString.CreateStringBuilder()) {
+                    sb.Append(value);
+                    switch (toChange) {
+                        case OverlayPanelEnum.COINS:
+                            activePanel.coins.SetText(sb);
+                            break;
+                        case OverlayPanelEnum.LIVES:
+                            activePanel.lives.SetText(sb);
+                            break;
+                        case OverlayPanelEnum.SCORE:
+                            activePanel.score.SetText(sb);
+                            break;
+                    }
+                }
             }
         }
 

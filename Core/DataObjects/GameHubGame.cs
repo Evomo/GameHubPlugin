@@ -10,6 +10,7 @@ namespace GamehubPlugin.Core {
     public class ScorePanelColorScheme {
         [Tooltip("Color used for the pause button and the score overlay background")]
         public Color backgroundColor;
+
         [Tooltip("Color used for the score trophy icon displayed in the gamehub")]
         public Color scoreColor;
 
@@ -20,8 +21,8 @@ namespace GamehubPlugin.Core {
     }
 
     public enum DeviceOrientation {
-        Landscape,
-        Portrait
+        Horizontal,
+        Vertical
     }
 
     [Flags]
@@ -30,31 +31,32 @@ namespace GamehubPlugin.Core {
         ElementalMove = 1 << 1
     }
 
-    public enum OverlayType {
-        Horizontal,
-        Vertical
-    }
-    
+
     [Serializable]
     public class OverlayOptions {
         public ScorePanelColorScheme colorScheme = new ScorePanelColorScheme();
-        public DeviceOrientation screenOrientation;
-        public OverlayType overlayType;
-        public bool useOverlay = true; 
-
+        public DeviceOrientation deviceOrientation;
+        public bool useOverlay = true;
     };
+
     public class GameHubGame : ScriptableObject {
-        [Tooltip("which scene should be loaded when starting the game ")]
-        public SceneReference mainSceneReference;
         public string gameName;
         public string description;
-        [Tooltip("Set Internally ")]
-        public int gameId;
+
+        [Tooltip("which scene should be loaded when starting the game ")]
+        public SceneReference mainSceneReference;
+
+        [Tooltip("Set Internally ")] public int gameId;
+
         [Tooltip("Which movements should be recorded for a session in this game? Defaults to everything")]
         public RecordType recordType;
-        public OverlayOptions overlayOptions = new OverlayOptions();
+
         [Tooltip("Universal Render Pipeline asset to ensure everything gets rendered correctly, can be left empty")]
         public RenderPipelineAsset scriptableRenderAsset;
+
+        public OverlayOptions overlayOptions = new OverlayOptions();
+        public DeviceOrientation screenOrientation;
+
 #if UNITY_EDITOR
         [MenuItem("Evomo/Gamehub/Create Game Asset")]
         public static void CreateGameHubGame() {
