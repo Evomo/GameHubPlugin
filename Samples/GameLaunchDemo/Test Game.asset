@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c16bd77948ec854b9f2896609ccb112, type: 3}
   m_Name: Test Game
   m_EditorClassIdentifier: 
+  gameName: 'Test Asset game '
+  description: 'Used to test and show how to use the debug "launcher" '
   mainSceneReference:
     sceneAsset: {fileID: 102900000, guid: 83ca8756ac0cb0e48b3d4b689c2ca2b8, type: 3}
     scenePath: Assets/GamehubPlugin/Samples/GameLaunchDemo/Game Scene.unity
-  gameName: 'Test Asset game '
-  description: 'Used to test and show how to use the debug "launcher" '
   gameId: 0
   recordType: -1
+  scriptableRenderAsset: {fileID: 0}
   overlayOptions:
     colorScheme:
       backgroundColor: {r: 1, g: 1, b: 1, a: 0.6392157}
       scoreColor: {r: 0.23921569, g: 0.21176471, b: 0.4509804, a: 1}
-    screenOrientation: 0
-    overlayType: 0
-    useOverlay: 0
-  scriptableRenderAsset: {fileID: 0}
+    menuType: 0
+    useOverlay: 1
+  screenOrientation: 0
