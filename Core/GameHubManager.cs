@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GamehubPlugin.Core.Util;
 using GamehubPlugin.Util;
 using MotionAI.Core.Controller;
 using MotionAI.Core.POCO;
@@ -44,7 +45,6 @@ namespace GamehubPlugin.Core {
             loadedGame = null;
         }
 
-
         #endregion
 
 
@@ -62,6 +62,17 @@ namespace GamehubPlugin.Core {
             StartSessionWrapper();
         }
 
+
+        private void CleanMainScene() {
+            DontDestroyOnLoadManager.DestroyAll();
+
+            foreach (GameObject o in SceneManager.GetSceneByBuildIndex(0).GetRootGameObjects()) {
+                if (!o.activeInHierarchy) {
+                    Destroy(o);
+                    Debug.Log($"Deleting {o.name}");
+                }
+            }
+        }
 
         IEnumerator UnloadGame() {
             AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
@@ -133,7 +144,11 @@ namespace GamehubPlugin.Core {
         private void QuitGame() {
             if (isGameRunning) {
                 if (_loadedScene.buildIndex > 0) {
+                    _currSess = null;
+
                     StartCoroutine(UnloadGame());
+                    CleanMainScene();
+
                 }
             }
             else {
@@ -146,6 +161,8 @@ namespace GamehubPlugin.Core {
                 EndSessionWrapped();
 
                 StartCoroutine(ResetGameCoroutine());
+                CleanMainScene();
+
             }
         }
 
@@ -235,8 +252,8 @@ namespace GamehubPlugin.Core {
         /// </summary>
         public static void Quit() {
             GameHubManager.Instance.QuitGame();
-         
         }
+
         /// <summary>
         /// Updates the coins for the current session
         /// </summary>
@@ -273,7 +290,6 @@ namespace GamehubPlugin.Core {
         }
 
 
-       
         /// <summary>
         /// Pauses the game and sends a message to the gamehub main app 
         /// </summary> 
@@ -288,9 +304,7 @@ namespace GamehubPlugin.Core {
             }
         }
 
-        
-        
-        
+
         /// <summary>
         /// Resumes the game and sets the time scale back to normal 
         /// </summary>
@@ -304,8 +318,6 @@ namespace GamehubPlugin.Core {
                 Debug.LogWarning("No Overlay, but would resume game now ");
             }
         }
-
-
 
         #endregion
     }
