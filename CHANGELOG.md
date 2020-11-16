@@ -1,3 +1,10 @@
+## [1.2.7](https://github.com/Evomo/GameHubPlugin/compare/v1.2.6...v1.2.7) (2020-11-16)
+
+
+### Bug Fixes
+
+* added game flow simulator for debugging ([360a8c3](https://github.com/Evomo/GameHubPlugin/commit/360a8c33fff93cce8f71fdcdf32f6f1854831d7d))
+
 ## [1.2.6](https://github.com/Evomo/GameHubPlugin/compare/v1.2.5...v1.2.6) (2020-11-12)
 
 
