@@ -11,7 +11,7 @@ namespace GamehubPlugin.Core {
 
     [Serializable]
     public class OverlayEvents {
-        public UnityEvent onPause, onQuit, onResume;
+        public UnityEvent onPause, onResume;
     }
 
 
@@ -110,11 +110,6 @@ namespace GamehubPlugin.Core {
             }
         }
 
-        public void QuitGame() {
-            Resume();
-            events.onQuit.Invoke();
-        }
-
         public void Resume() {
             _isPaused = false;
             Time.timeScale = 1f;
@@ -126,5 +121,16 @@ namespace GamehubPlugin.Core {
             Time.timeScale = 0;
             events.onPause.Invoke();
         }
+
+        public void OnApplicationPause(bool pauseStatus) {
+            if (pauseStatus) {
+                Pause();
+            }
+            else {
+                Resume();
+            }
+        }
     }
+    
+    
 }
