@@ -44,6 +44,7 @@ namespace GamehubPlugin.Core {
             loadedGame = null;
         }
 
+
         #endregion
 
 
@@ -119,7 +120,6 @@ namespace GamehubPlugin.Core {
 
             if (_loadedScene.buildIndex <= 0) {
                 StartCoroutine(LoadGame(sceneNum, game));
-                StartSessionWrapper();
             }
         }
 
@@ -143,7 +143,7 @@ namespace GamehubPlugin.Core {
 
         private void ResetScene() {
             if (_loadedScene.buildIndex > 0) {
-                SendCurrentSession(true);
+                EndSessionWrapped();
 
                 StartCoroutine(ResetGameCoroutine());
             }
@@ -156,8 +156,8 @@ namespace GamehubPlugin.Core {
                     return;
                 }
 
-                try {
-                    m_CurrentManager = FindObjectOfType<MotionAIManager>();
+                m_CurrentManager = FindObjectOfType<MotionAIManager>();
+                if (m_CurrentManager != null) {
                     _currSess = new Session(loadedGame);
 
                     if (!_hasNotifiedApp) {
@@ -174,9 +174,9 @@ namespace GamehubPlugin.Core {
 
                     m_CurrentManager.controllerManager.onMovement.AddListener(SessionRecordCallback);
                 }
-                catch (Exception) {
-                    Debug.LogError("No MotionAIManager present in scene ");
-                }
+            }
+            else {
+                Debug.LogError("No MotionAIManager present in scene ");
             }
         }
 
@@ -233,11 +233,10 @@ namespace GamehubPlugin.Core {
         /// <summary>
         /// Stops the game and returns to the main app
         /// </summary>
-        public static void StopGame() {
-            Overlay o = GameHubManager.Instance._overlay;
-            if (o != null) o.QuitGame();
+        public static void Quit() {
+            GameHubManager.Instance.QuitGame();
+         
         }
-
         /// <summary>
         /// Updates the coins for the current session
         /// </summary>
@@ -274,35 +273,39 @@ namespace GamehubPlugin.Core {
         }
 
 
+       
+        /// <summary>
+        /// Pauses the game and sends a message to the gamehub main app 
+        /// </summary> 
         public static void Pause() {
             Overlay o = GameHubManager.Instance._overlay;
             if (o != null) {
                 o.Pause();
             }
+
             else {
                 Debug.LogWarning("No Overlay, but would pause now");
             }
         }
 
+        
+        
+        
+        /// <summary>
+        /// Resumes the game and sets the time scale back to normal 
+        /// </summary>
         public static void Resume() {
             Overlay o = GameHubManager.Instance._overlay;
             if (o != null) {
-                o.Resume();
+                o.IsPaused = false;
             }
+
             else {
                 Debug.LogWarning("No Overlay, but would resume game now ");
             }
         }
 
-        public static void Quit() {
-            Overlay o = GameHubManager.Instance._overlay;
-            if (o != null) {
-                o.QuitGame();
-            }
-            else {
-                Debug.LogWarning("No Overlay, but would quit game ");
-            }
-        }
+
 
         #endregion
     }
