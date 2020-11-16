@@ -1,3 +1,10 @@
+## [1.2.6](https://github.com/Evomo/GameHubPlugin/compare/v1.2.5...v1.2.6) (2020-11-12)
+
+
+### Bug Fixes
+
+* demo fixed, added prefab ([5798749](https://github.com/Evomo/GameHubPlugin/commit/5798749a54484ec683cca6b0eaefdb16ac214b9c))
+
 ## [1.2.5](https://github.com/Evomo/GameHubPlugin/compare/v1.2.4...v1.2.5) (2020-11-12)
 
 
