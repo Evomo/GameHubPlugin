@@ -57,24 +57,30 @@ namespace GamehubPlugin.Core {
             activePanel = vertical;
         }
 
-        private void ResetPanel(OverlayPanel p, ScorePanelColorScheme cs) {
+        private void ResetPanel(OverlayPanel p, ScorePanelColorScheme cs,PanelOptions po) {
             p.coins.text = "0";
             p.lives.text = "0";
             p.score.text = "0";
+            p.coins.color = cs.overLayTextColor;
+            p.lives.color = cs.overLayTextColor;
+            p.score.color = cs.overLayTextColor;
             p.panelBackground.color = cs.backgroundColor;
             p.scoreIcon.color = cs.scoreColor;
             p.pauseIcon.color = cs.backgroundColor;
+            p.coinPanel.SetActive(po.useCoin);
+            p.livePanel.SetActive(po.useLive);
             p.gameObject.SetActive(false);
         }
 
         public void ResetPanel(GameHubGame game) {
             ScorePanelColorScheme cs = game.overlayOptions.colorScheme;
-
-            ResetPanel(vertical, cs);
-            ResetPanel(horizontal, cs);
+            PanelOptions po = game.overlayOptions.panelOptions;
+            ResetPanel(vertical, cs,po);
+            ResetPanel(horizontal, cs,po);
 
             _isPanelActive = game.overlayOptions.useOverlay;
             activePanel = game.overlayOptions.menuType == DeviceOrientation.Horizontal ? horizontal : vertical;
+
 
             IsPaused = true;
         }

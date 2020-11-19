@@ -7,7 +7,7 @@ namespace GamehubPlugin.Core.OverlaySpace {
         public Image panelBackground, scoreIcon, pauseIcon;
         public TextMeshProUGUI coins, lives, score;
         public Button pause;
-        public GameObject gameScorePanel;
+        public GameObject gameScorePanel, coinPanel, livePanel;
     }
     
 }
