@@ -36,6 +36,7 @@ namespace GamehubPlugin.Core {
         ElementalMove = 1 << 1
     }
 
+    [Serializable]
     public class PanelOptions
     {
         public bool useLive = true;
