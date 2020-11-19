@@ -14,9 +14,14 @@ namespace GamehubPlugin.Core {
         [Tooltip("Color used for the score trophy icon displayed in the gamehub")]
         public Color scoreColor;
 
+        [Tooltip("Color used for the Text Color in Overlay displayed in the gamehub")]
+        public Color overLayTextColor;
+
+        
         public ScorePanelColorScheme() {
             backgroundColor = Extensions.ToColor("#FFFFFFA3");
             scoreColor = Extensions.ToColor("#3D3673");
+            overLayTextColor = Extensions.ToColor("#FFFFFF");
         }
     }
 
@@ -31,12 +36,18 @@ namespace GamehubPlugin.Core {
         ElementalMove = 1 << 1
     }
 
-
+    public class PanelOptions
+    {
+        public bool useLive = true;
+        public bool useCoin = true;
+        public bool useScore = true;
+    }
     [Serializable]
     public class OverlayOptions {
         public ScorePanelColorScheme colorScheme = new ScorePanelColorScheme();
         public DeviceOrientation menuType;
         public bool useOverlay = true;
+        public PanelOptions panelOptions = new PanelOptions();
     };
 
     public class GameHubGame : ScriptableObject {
