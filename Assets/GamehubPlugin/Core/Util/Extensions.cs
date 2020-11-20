@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace GamehubPlugin.Core.Util {
-    
-    public static class DontDestroyOnLoadManager
-    {
+    public static class DontDestroyOnLoadManager {
         static List<GameObject> _ddolObjects = new List<GameObject>();
 
         public static void DontDestroyOnLoad(this GameObject go) {
@@ -14,23 +12,27 @@ namespace GamehubPlugin.Core.Util {
         }
 
         public static void DestroyAll() {
-            foreach(var go in _ddolObjects)
-                if(go != null)
+            foreach (var go in _ddolObjects)
+                if (go != null)
                     UnityEngine.Object.Destroy(go);
 
             _ddolObjects.Clear();
         }
     }
+
     public static class Extensions {
-        public static Color ToColor(this string color)
-        {
-            if (color.StartsWith("#", StringComparison.InvariantCulture))
-            {
+        public static Color ContrastColor(Color color) {
+            float h, s, v;
+            Color.RGBToHSV(color, out h, out s, out v);
+            return Color.HSVToRGB(h , s, 1 - v);
+        }
+
+        public static Color ToColor(this string color) {
+            if (color.StartsWith("#", StringComparison.InvariantCulture)) {
                 color = color.Substring(1); // strip #
             }
 
-            if (color.Length == 6)
-            {
+            if (color.Length == 6) {
                 color += "FF"; // add alpha if missing
             }
 

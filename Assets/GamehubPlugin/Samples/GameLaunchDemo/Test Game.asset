@@ -22,8 +22,8 @@ MonoBehaviour:
   scriptableRenderAsset: {fileID: 0}
   overlayOptions:
     colorScheme:
-      backgroundColor: {r: 1, g: 1, b: 1, a: 0.6392157}
+      backgroundColor: {r: 0.38702616, g: 0.6226415, b: 0.28430045, a: 0.6745098}
       scoreColor: {r: 0.23921569, g: 0.21176471, b: 0.4509804, a: 1}
-    menuType: 0
-    useOverlay: 1
-  screenOrientation: 0
+    menuType: 1
+    usedPanels: 4
+  screenOrientation: 1
