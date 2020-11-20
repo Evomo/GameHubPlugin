@@ -1,3 +1,10 @@
+## [1.2.10](https://github.com/Evomo/GameHubPlugin/compare/v1.2.9...v1.2.10) (2020-11-20)
+
+
+### Bug Fixes
+
+* panel is responsive to amount of elements ([f6985a8](https://github.com/Evomo/GameHubPlugin/commit/f6985a8260f3ed73adbc237d149d34ac45ab129d))
+
 ## [1.2.7](https://github.com/Evomo/GameHubPlugin/compare/v1.2.6...v1.2.7) (2020-11-16)
 
 
