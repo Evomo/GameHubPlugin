@@ -57,29 +57,34 @@ namespace GamehubPlugin.Core {
             activePanel = vertical;
         }
 
-        private void ResetPanel(OverlayPanel p, ScorePanelColorScheme cs,PanelOptions po) {
+        private void ResetPanel(OverlayPanel p, GameHubGame game ) {
+            ScorePanelColorScheme cs = game.overlayOptions.colorScheme;
+            PanelOptions po = game.overlayOptions.usedPanels;
+            Color overLayTextColor = Util.Extensions.ContrastColor(cs.backgroundColor);
+
             p.coins.text = "0";
             p.lives.text = "0";
             p.score.text = "0";
-            p.coins.color = cs.overLayTextColor;
-            p.lives.color = cs.overLayTextColor;
-            p.score.color = cs.overLayTextColor;
+            p.coins.color = overLayTextColor;
+            p.lives.color = overLayTextColor;
+            p.score.color = overLayTextColor;
             p.panelBackground.color = cs.backgroundColor;
             p.scoreIcon.color = cs.scoreColor;
             p.pauseIcon.color = cs.backgroundColor;
-            p.coinPanel.SetActive(po.useCoin);
-            p.livePanel.SetActive(po.useLive);
+            
+            p.coinPanel.SetActive(po.HasFlag(PanelOptions.COINS));
+            p.livePanel.SetActive(po.HasFlag(PanelOptions.LIVES));
             p.gameObject.SetActive(false);
         }
 
         public void ResetPanel(GameHubGame game) {
-            ScorePanelColorScheme cs = game.overlayOptions.colorScheme;
-            PanelOptions po = game.overlayOptions.panelOptions;
-            ResetPanel(vertical, cs,po);
-            ResetPanel(horizontal, cs,po);
 
-            _isPanelActive = game.overlayOptions.useOverlay;
+            ResetPanel(vertical,   game);
+            ResetPanel(horizontal, game);
+
             activePanel = game.overlayOptions.menuType == DeviceOrientation.Horizontal ? horizontal : vertical;
+
+            _isPanelActive = game.overlayOptions.usedPanels != 0;
 
 
             IsPaused = true;
@@ -117,12 +122,14 @@ namespace GamehubPlugin.Core {
         }
 
         public void Resume() {
+            AudioListener.pause = false;
             _isPaused = false;
             Time.timeScale = 1f;
             events.onResume.Invoke();
         }
 
         public void Pause() {
+            AudioListener.pause = true;
             _isPaused = true;
             Time.timeScale = 0;
             events.onPause.Invoke();
