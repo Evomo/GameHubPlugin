@@ -60,14 +60,14 @@ namespace GamehubPlugin.Core {
         private void ResetPanel(OverlayPanel p, GameHubGame game ) {
             ScorePanelColorScheme cs = game.overlayOptions.colorScheme;
             PanelOptions po = game.overlayOptions.usedPanels;
-            Color overLayTextColor = Util.Extensions.ContrastColor(cs.backgroundColor);
+            Color textCol = game.overlayOptions.colorScheme.textColor; 
 
             p.coins.text = "0";
             p.lives.text = "0";
             p.score.text = "0";
-            p.coins.color = overLayTextColor;
-            p.lives.color = overLayTextColor;
-            p.score.color = overLayTextColor;
+            p.coins.color = textCol; 
+            p.lives.color = textCol;
+            p.score.color = textCol;
             p.panelBackground.color = cs.backgroundColor;
             p.scoreIcon.color = cs.scoreColor;
             p.pauseIcon.color = cs.backgroundColor;
