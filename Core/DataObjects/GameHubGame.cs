@@ -47,7 +47,8 @@ namespace GamehubPlugin.Core {
     public class OverlayOptions {
         public ScorePanelColorScheme colorScheme = new ScorePanelColorScheme();
         public DeviceOrientation menuType;
-       public PanelOptions usedPanels;
+       public PanelOptions usedPanels = PanelOptions.COINS | PanelOptions.LIVES | PanelOptions.SCORE;
+
     };
 
     public class GameHubGame : ScriptableObject {
