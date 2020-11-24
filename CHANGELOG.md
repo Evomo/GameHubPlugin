@@ -1,3 +1,10 @@
+## [1.2.12](https://github.com/Evomo/GameHubPlugin/compare/v1.2.11...v1.2.12) (2020-11-24)
+
+
+### Bug Fixes
+
+* added default panel ([4a8a546](https://github.com/Evomo/GameHubPlugin/commit/4a8a54614bd25ee90205556d0083084543c58588))
+
 ## [1.2.11](https://github.com/Evomo/GameHubPlugin/compare/v1.2.10...v1.2.11) (2020-11-24)
 
 
