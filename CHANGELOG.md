@@ -1,3 +1,11 @@
+## [1.2.11](https://github.com/Evomo/GameHubPlugin/compare/v1.2.10...v1.2.11) (2020-11-24)
+
+
+### Bug Fixes
+
+* added default overlay ([27471ae](https://github.com/Evomo/GameHubPlugin/commit/27471ae9ecd57cfe8f28ea7c0d5500d847e2aff3))
+* text color ([92b7b63](https://github.com/Evomo/GameHubPlugin/commit/92b7b632d5af52852351531963e5022f62789202))
+
 ## [1.2.10](https://github.com/Evomo/GameHubPlugin/compare/v1.2.9...v1.2.10) (2020-11-20)
 
 
