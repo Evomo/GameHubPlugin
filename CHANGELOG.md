@@ -1,3 +1,10 @@
+## [1.2.17](https://github.com/Evomo/GameHubPlugin/compare/v1.2.16...v1.2.17) (2020-12-01)
+
+
+### Bug Fixes
+
+* serialization issues ([79c1e8a](https://github.com/Evomo/GameHubPlugin/commit/79c1e8a13b57e4975b6c394800d1afb7e6361633))
+
 ## [1.2.16](https://github.com/Evomo/GameHubPlugin/compare/v1.2.15...v1.2.16) (2020-12-01)
 
 
