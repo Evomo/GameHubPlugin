@@ -90,11 +90,10 @@ namespace GamehubPlugin.Core {
             int sceneNumber = _loadedScene.buildIndex;
             AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(sceneNumber);
             yield return new WaitUntil(() => asyncUnload.isDone);
-            yield return  StartCoroutine(LoadGame(sceneNumber, loadedGame));
+            yield return StartCoroutine(LoadGame(sceneNumber, loadedGame));
             _overlay.ResetPanel(loadedGame);
 
             _overlay.IsPaused = false;
-            
         }
 
         #endregion
@@ -224,6 +223,23 @@ namespace GamehubPlugin.Core {
             _currSess = null;
         }
 
+
+        public void HandlePause(bool shouldPause) {
+            if (_overlay != null) {
+                _currSess?.TogglePause(shouldPause);
+                if (shouldPause) {
+                    _overlay.Pause();
+                }
+                else {
+                    _overlay.Resume();
+                }
+            }
+
+            else {
+                Debug.LogWarning($"No Overlay, but would {(shouldPause ? "pause" : "resume")} now");
+            }
+        }
+
         #endregion
 
         #region Public API
@@ -295,14 +311,7 @@ namespace GamehubPlugin.Core {
         /// Pauses the game and sends a message to the gamehub main app 
         /// </summary> 
         public static void Pause() {
-            Overlay o = GameHubManager.Instance._overlay;
-            if (o != null) {
-                o.Pause();
-            }
-
-            else {
-                Debug.LogWarning("No Overlay, but would pause now");
-            }
+            GameHubManager.Instance.HandlePause(true);
         }
 
 
@@ -310,14 +319,7 @@ namespace GamehubPlugin.Core {
         /// Resumes the game and sets the time scale back to normal 
         /// </summary>
         public static void Resume() {
-            Overlay o = GameHubManager.Instance._overlay;
-            if (o != null) {
-                o.IsPaused = false;
-            }
-
-            else {
-                Debug.LogWarning("No Overlay, but would resume game now ");
-            }
+            GameHubManager.Instance.HandlePause(false);
         }
 
         #endregion

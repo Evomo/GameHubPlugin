@@ -16,8 +16,9 @@ namespace GamehubPlugin.Core {
         public double duration;
         public Record[] movements, elmos;
         public int gameId;
+        private double timeOnPause;
 
-
+        private DateTime pauseStart; 
         private Dictionary<MovementEnum, Record> _mvDict;
         private Dictionary<ElmoEnum, Record> _elmoDict;
 
@@ -35,7 +36,7 @@ namespace GamehubPlugin.Core {
         }
 
         public Session EndSession() {
-            duration = (DateTime.Now - StartTime).TotalSeconds;
+            duration = (DateTime.Now - StartTime).TotalSeconds - timeOnPause;
             movements = _mvDict.Values.ToArray();
             elmos = _elmoDict.Values.ToArray();
             return this;
@@ -66,6 +67,14 @@ namespace GamehubPlugin.Core {
             }
         }
 
+        public void TogglePause(bool shouldPause) {
+            if (shouldPause) {
+                pauseStart = DateTime.Now;
+            }
+            else {
+                timeOnPause += (DateTime.Now - pauseStart).TotalSeconds;
+            }
+        }
         [Serializable]
         public class Record {
             public string name;
