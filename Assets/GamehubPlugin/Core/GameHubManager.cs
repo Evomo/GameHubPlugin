@@ -31,7 +31,7 @@ namespace GamehubPlugin.Core {
 
         public void Awake() {
             _overlay = GetComponentInChildren<Overlay>();
-
+            _currSess = null;
             if (_overlay == null) {
                 if (overlayPrefab == null) {
                     overlayPrefab = Resources.Load<Overlay>("Overlay");
@@ -134,6 +134,7 @@ namespace GamehubPlugin.Core {
 
             if (_loadedScene.buildIndex <= 0) {
                 StartCoroutine(LoadGame(sceneNum, game));
+                _overlay.IsPaused = true;
             }
         }
 
