@@ -1,3 +1,10 @@
+## [1.2.14](https://github.com/Evomo/GameHubPlugin/compare/v1.2.13...v1.2.14) (2020-12-01)
+
+
+### Bug Fixes
+
+* game now resets correctly ([0fe332a](https://github.com/Evomo/GameHubPlugin/commit/0fe332af88559ce64a3326d206ac58edd68f0d19))
+
 ## [1.2.13](https://github.com/Evomo/GameHubPlugin/compare/v1.2.12...v1.2.13) (2020-11-27)
 
 
