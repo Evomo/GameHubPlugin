@@ -1,3 +1,10 @@
+## [1.2.13](https://github.com/Evomo/GameHubPlugin/compare/v1.2.12...v1.2.13) (2020-11-27)
+
+
+### Bug Fixes
+
+* updated ui ([40dd5e8](https://github.com/Evomo/GameHubPlugin/commit/40dd5e86a9ae82aa8bef1b17475879ad588be2f2))
+
 ## [1.2.12](https://github.com/Evomo/GameHubPlugin/compare/v1.2.11...v1.2.12) (2020-11-24)
 
 
