@@ -16,7 +16,7 @@ namespace GamehubPlugin.Core {
         private bool _hasNotifiedApp;
 
         [SerializeField] private Overlay _overlay;
-        private Session _currSess;
+        [NonSerialized]private Session _currSess;
         private Scene _loadedScene;
 
         [SerializeField] private Overlay overlayPrefab;
