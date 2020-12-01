@@ -46,9 +46,7 @@ namespace GamehubPlugin.Core {
                         Resume();
                     }
 
-                    if (_isPanelActive) {
-                        activePanel.gameObject.SetActive(!_isPaused);
-                    }
+                    activePanel.gameObject.SetActive(!_isPaused && _isPanelActive);
                 }
             }
         }
@@ -57,37 +55,33 @@ namespace GamehubPlugin.Core {
             activePanel = vertical;
         }
 
-        private void ResetPanel(OverlayPanel p, GameHubGame game ) {
+        private void ResetPanel(OverlayPanel p, GameHubGame game) {
             ScorePanelColorScheme cs = game.overlayOptions.colorScheme;
             PanelOptions po = game.overlayOptions.usedPanels;
-            Color textCol = game.overlayOptions.colorScheme.textColor; 
+            Color textCol = game.overlayOptions.colorScheme.textColor;
 
             p.coins.text = "0";
             p.lives.text = "0";
             p.score.text = "0";
-            p.coins.color = textCol; 
+            p.coins.color = textCol;
             p.lives.color = textCol;
             p.score.color = textCol;
             p.panelBackground.color = cs.backgroundColor;
             p.scoreIcon.color = cs.scoreColor;
             p.pauseIcon.color = cs.backgroundColor;
-            
+
             p.coinPanel.SetActive(po.HasFlag(PanelOptions.COINS));
             p.livePanel.SetActive(po.HasFlag(PanelOptions.LIVES));
             p.gameObject.SetActive(false);
         }
 
         public void ResetPanel(GameHubGame game) {
-
-            ResetPanel(vertical,   game);
+            ResetPanel(vertical, game);
             ResetPanel(horizontal, game);
 
             activePanel = game.overlayOptions.menuType == DeviceOrientation.Horizontal ? horizontal : vertical;
-
             _isPanelActive = game.overlayOptions.usedPanels != 0;
-
-
-            IsPaused = true;
+            activePanel.gameObject.SetActive(true);
         }
 
         public void UpdateManager(MotionAIManager manager) {
@@ -144,6 +138,4 @@ namespace GamehubPlugin.Core {
             }
         }
     }
-    
-    
 }
