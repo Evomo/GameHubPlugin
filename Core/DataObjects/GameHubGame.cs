@@ -61,7 +61,7 @@ namespace GamehubPlugin.Core {
         [Tooltip("Set Internally ")] public int gameId;
 
         [Tooltip("Which movements should be recorded for a session in this game? Defaults to everything")]
-        public RecordType recordType;
+        public RecordType recordType = RecordType.Movements | RecordType.ElementalMove;
 
         [Tooltip("Universal Render Pipeline asset to ensure everything gets rendered correctly, can be left empty")]
         public RenderPipelineAsset scriptableRenderAsset;

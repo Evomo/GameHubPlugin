@@ -90,7 +90,11 @@ namespace GamehubPlugin.Core {
             int sceneNumber = _loadedScene.buildIndex;
             AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(sceneNumber);
             yield return new WaitUntil(() => asyncUnload.isDone);
-            StartCoroutine(LoadGame(sceneNumber, loadedGame));
+            yield return  StartCoroutine(LoadGame(sceneNumber, loadedGame));
+            _overlay.ResetPanel(loadedGame);
+
+            _overlay.IsPaused = false;
+            
         }
 
         #endregion
@@ -148,7 +152,6 @@ namespace GamehubPlugin.Core {
 
                     StartCoroutine(UnloadGame());
                     CleanMainScene();
-
                 }
             }
             else {
@@ -159,10 +162,8 @@ namespace GamehubPlugin.Core {
         private void ResetScene() {
             if (_loadedScene.buildIndex > 0) {
                 EndSessionWrapped();
-
                 StartCoroutine(ResetGameCoroutine());
                 CleanMainScene();
-
             }
         }
 
