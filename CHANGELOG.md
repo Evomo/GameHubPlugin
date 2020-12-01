@@ -1,3 +1,11 @@
+## [1.2.15](https://github.com/Evomo/GameHubPlugin/compare/v1.2.14...v1.2.15) (2020-12-01)
+
+
+### Bug Fixes
+
+* clickable button ([6df6ffb](https://github.com/Evomo/GameHubPlugin/commit/6df6ffb299282bc0563a2961a44e38c43c377eae))
+* pause time handler for sessions ([7172408](https://github.com/Evomo/GameHubPlugin/commit/717240878fd241311e8db4e54ff6139338e89b11))
+
 ## [1.2.14](https://github.com/Evomo/GameHubPlugin/compare/v1.2.13...v1.2.14) (2020-12-01)
 
 
