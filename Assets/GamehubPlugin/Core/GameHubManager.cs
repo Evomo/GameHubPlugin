@@ -26,6 +26,7 @@ namespace GamehubPlugin.Core {
         public GameHubGame loadedGame;
 
         public bool isGameRunning { get; private set; }
+        public Overlay Overlay { get; }
 
         #region Unity Lifecycle
 
