@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6123426641575117402}
   - component: {fileID: 941242083144336602}
-  - component: {fileID: 204199035}
   m_Layer: 0
   m_Name: GameHubManager
   m_TagString: Untagged
@@ -50,21 +49,6 @@ MonoBehaviour:
     type: 3}
   m_CurrentManager: {fileID: 0}
   loadedGame: {fileID: 0}
---- !u!114 &204199035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6123426641575117405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e337347a1185954892a66ba58ac1c34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gamehub: {fileID: 0}
-  defaultRenderAsset: {fileID: 11400000, guid: 7b8dabfee23080a439edeb9c30cb49f0, type: 2}
-  games: []
 --- !u!1001 &2335722819859099460
 PrefabInstance:
   m_ObjectHideFlags: 0
