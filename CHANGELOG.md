@@ -1,3 +1,10 @@
+## [1.2.19](https://github.com/Evomo/GameHubPlugin/compare/v1.2.18...v1.2.19) (2020-12-04)
+
+
+### Bug Fixes
+
+* Overlay ([c7439f7](https://github.com/Evomo/GameHubPlugin/commit/c7439f78fd2cdf9d7187e0894f1f2c0cb408556a))
+
 ## [1.2.18](https://github.com/Evomo/GameHubPlugin/compare/v1.2.17...v1.2.18) (2020-12-04)
 
 
