@@ -16,6 +16,7 @@ namespace GamehubPlugin.Core {
         private bool _hasNotifiedApp;
 
         [SerializeField] private Overlay _overlay;
+        
         [NonSerialized]private Session _currSess;
         private Scene _loadedScene;
 
@@ -26,7 +27,7 @@ namespace GamehubPlugin.Core {
         public GameHubGame loadedGame;
 
         public bool isGameRunning { get; private set; }
-        public Overlay Overlay { get; }
+        public Overlay Overlay() { return _overlay; }
 
         #region Unity Lifecycle
 
