@@ -1,3 +1,10 @@
+## [1.2.21](https://github.com/Evomo/GameHubPlugin/compare/v1.2.20...v1.2.21) (2020-12-04)
+
+
+### Bug Fixes
+
+* added pause game time count ([a4c0a5d](https://github.com/Evomo/GameHubPlugin/commit/a4c0a5d5270276a63e0f343c6dcfc5b42a2e6957))
+
 ## [1.2.20](https://github.com/Evomo/GameHubPlugin/compare/v1.2.19...v1.2.20) (2020-12-04)
 
 
