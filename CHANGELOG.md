@@ -1,3 +1,10 @@
+## [1.2.20](https://github.com/Evomo/GameHubPlugin/compare/v1.2.19...v1.2.20) (2020-12-04)
+
+
+### Bug Fixes
+
+* changed game id to name ([98fa476](https://github.com/Evomo/GameHubPlugin/commit/98fa476a079b521b99908c3498266a4ebf611715))
+
 ## [1.2.19](https://github.com/Evomo/GameHubPlugin/compare/v1.2.18...v1.2.19) (2020-12-04)
 
 
