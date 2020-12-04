@@ -15,7 +15,7 @@ namespace GamehubPlugin.Core {
         public long timestamp;
         public double duration;
         public Record[] movements, elmos;
-        public int gameId;
+        public string gameId;
         private double timeOnPause;
 
         private DateTime pauseStart; 
@@ -28,7 +28,7 @@ namespace GamehubPlugin.Core {
             this.recordType = game.recordType;
             StartTime = DateTime.Now;
             timestamp = ((DateTimeOffset) StartTime).ToUnixTimeSeconds();
-            this.gameId = game.gameId;
+            this.gameId = game.gameName;
         }
 
         public override string ToString() {

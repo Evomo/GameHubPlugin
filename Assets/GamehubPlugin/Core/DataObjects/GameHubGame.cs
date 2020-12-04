@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace GamehubPlugin.Core {
+    #region Extra Classes
+
     [Serializable]
     public class ScorePanelColorScheme {
         [Tooltip("Color used for the pause button and the score overlay background")]
@@ -17,7 +19,7 @@ namespace GamehubPlugin.Core {
         [Tooltip("Color used for the overlay text ")]
         public Color textColor;
 
-        
+
         public ScorePanelColorScheme() {
             backgroundColor = Extensions.ToColor("#FFFFFFA3");
             scoreColor = Extensions.ToColor("#3D3673");
@@ -47,18 +49,16 @@ namespace GamehubPlugin.Core {
     public class OverlayOptions {
         public ScorePanelColorScheme colorScheme = new ScorePanelColorScheme();
         public DeviceOrientation menuType;
-       public PanelOptions usedPanels = PanelOptions.COINS | PanelOptions.LIVES | PanelOptions.SCORE;
-
+        public PanelOptions usedPanels = PanelOptions.COINS | PanelOptions.LIVES | PanelOptions.SCORE;
     };
+
+    #endregion
 
     public class GameHubGame : ScriptableObject {
         public string gameName;
-        public string description;
 
         [Tooltip("which scene should be loaded when starting the game ")]
         public SceneReference mainSceneReference;
-
-        [Tooltip("Set Internally ")] public int gameId;
 
         [Tooltip("Which movements should be recorded for a session in this game? Defaults to everything")]
         public RecordType recordType = RecordType.Movements | RecordType.ElementalMove;
