@@ -1,3 +1,10 @@
+## [1.2.18](https://github.com/Evomo/GameHubPlugin/compare/v1.2.17...v1.2.18) (2020-12-04)
+
+
+### Bug Fixes
+
+* removed unused script ([4ce4f95](https://github.com/Evomo/GameHubPlugin/commit/4ce4f95f5bdd495dc2f733589112ddd414f643a7))
+
 ## [1.2.17](https://github.com/Evomo/GameHubPlugin/compare/v1.2.16...v1.2.17) (2020-12-01)
 
 
