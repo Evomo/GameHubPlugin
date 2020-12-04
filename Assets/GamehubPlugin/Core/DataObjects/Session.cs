@@ -18,11 +18,12 @@ namespace GamehubPlugin.Core {
         public string gameId;
         private double timeOnPause;
 
-        private DateTime pauseStart; 
+        [NonSerialized]private DateTime? pauseStart; 
         private Dictionary<MovementEnum, Record> _mvDict;
         private Dictionary<ElmoEnum, Record> _elmoDict;
 
         public Session(GameHubGame game) {
+            pauseStart = null;
             _mvDict = new Dictionary<MovementEnum, Record>();
             _elmoDict = new Dictionary<ElmoEnum, Record>();
             this.recordType = game.recordType;
@@ -36,7 +37,9 @@ namespace GamehubPlugin.Core {
         }
 
         public Session EndSession() {
-            duration = (DateTime.Now - StartTime).TotalSeconds - timeOnPause;
+            //Toggle pause to get pause duration in case the game is currently paused
+            TogglePause(false);
+            duration = Math.Max((DateTime.Now - StartTime).TotalSeconds - timeOnPause, 0);
             movements = _mvDict.Values.ToArray();
             elmos = _elmoDict.Values.ToArray();
             return this;
@@ -68,11 +71,14 @@ namespace GamehubPlugin.Core {
         }
 
         public void TogglePause(bool shouldPause) {
-            if (shouldPause) {
+            if (shouldPause && pauseStart == null) {
                 pauseStart = DateTime.Now;
             }
             else {
-                timeOnPause += (DateTime.Now - pauseStart).TotalSeconds;
+                if (pauseStart != null) {
+                    double currentPause = Math.Max((DateTime.Now - pauseStart.Value).TotalSeconds,0);
+                    timeOnPause +=  currentPause;
+                }
             }
         }
         [Serializable]

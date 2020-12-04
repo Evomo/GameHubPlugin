@@ -42,8 +42,12 @@ namespace GamehubPlugin.Core {
                 }
             }
 
+                
+            
+            _overlay.events.onPause.AddListener((() => HandlePause(true)));
+            _overlay.events.onResume.AddListener((() => HandlePause(false)));
 
-            _overlay.events.onPause.AddListener(() => SendCurrentSession());
+
             loadedGame = null;
         }
 
@@ -95,7 +99,7 @@ namespace GamehubPlugin.Core {
             yield return StartCoroutine(LoadGame(sceneNumber, loadedGame));
             _overlay.ResetPanel(loadedGame);
 
-            _overlay.IsPaused = false;
+            _overlay.events.onResume.Invoke();
         }
 
         #endregion
@@ -136,7 +140,7 @@ namespace GamehubPlugin.Core {
 
             if (_loadedScene.buildIndex <= 0) {
                 StartCoroutine(LoadGame(sceneNum, game));
-                _overlay.IsPaused = true;
+                _overlay.events.onPause.Invoke();
             }
         }
 
@@ -232,15 +236,13 @@ namespace GamehubPlugin.Core {
                 _currSess?.TogglePause(shouldPause);
                 if (shouldPause) {
                     _overlay.Pause();
+                    SendCurrentSession();
                 }
                 else {
                     _overlay.Resume();
                 }
             }
 
-            else {
-                Debug.LogWarning($"No Overlay, but would {(shouldPause ? "pause" : "resume")} now");
-            }
         }
 
         #endregion
