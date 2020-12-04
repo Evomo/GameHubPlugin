@@ -39,13 +39,8 @@ namespace GamehubPlugin.Core {
             get { return _isPaused; }
             set {
                 if (_isPaused != value) {
-                    if (!_isPaused) {
-                        Pause();
-                    }
-                    else {
-                        Resume();
-                    }
 
+                    _isPaused = value;
                     activePanel.gameObject.SetActive(!_isPaused && _isPanelActive);
                 }
             }
@@ -88,12 +83,7 @@ namespace GamehubPlugin.Core {
             m_Manager = manager;
         }
 
-        public void TogglePause() {
-            IsPaused = !IsPaused;
-            if (m_Manager != null) {
-                m_Manager.isTracking = !IsPaused;
-            }
-        }
+
 
 
         public void UpdatePanelValue<T>(OverlayPanelEnum toChange, T value) {
@@ -115,18 +105,29 @@ namespace GamehubPlugin.Core {
             }
         }
 
+        public void TogglePause() {
+            if (m_Manager != null) {
+                m_Manager.isTracking = !IsPaused;
+            }
+            
+            if (IsPaused) {
+                events.onResume.Invoke();
+            }
+            else {
+                events.onPause.Invoke();
+            }
+            
+        }
         public void Resume() {
             AudioListener.pause = false;
-            _isPaused = false;
+            IsPaused = false;
             Time.timeScale = 1f;
-            events.onResume.Invoke();
         }
 
         public void Pause() {
             AudioListener.pause = true;
-            _isPaused = true;
+            IsPaused = true;
             Time.timeScale = 0;
-            events.onPause.Invoke();
         }
 
         public void OnApplicationPause(bool pauseStatus) {
