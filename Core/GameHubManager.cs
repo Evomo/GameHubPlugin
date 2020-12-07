@@ -157,7 +157,7 @@ namespace GamehubPlugin.Core {
             if (isGameRunning) {
                 if (_loadedScene.buildIndex > 0) {
                     _currSess = null;
-                    CleanMainScene();
+                    CleanMainScene(); 
                     StartCoroutine(UnloadGame());
                 }
             }
