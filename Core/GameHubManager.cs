@@ -90,6 +90,8 @@ namespace GamehubPlugin.Core {
             m_CurrentManager = null;
 
             _loadedScene = SceneManager.GetSceneByBuildIndex(0);
+            Application.Unload();
+
         }
 
         IEnumerator ResetGameCoroutine() {
@@ -155,9 +157,8 @@ namespace GamehubPlugin.Core {
             if (isGameRunning) {
                 if (_loadedScene.buildIndex > 0) {
                     _currSess = null;
-
-                    StartCoroutine(UnloadGame());
                     CleanMainScene();
+                    StartCoroutine(UnloadGame());
                 }
             }
             else {
