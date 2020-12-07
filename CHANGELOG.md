@@ -1,3 +1,10 @@
+## [1.2.22](https://github.com/Evomo/GameHubPlugin/compare/v1.2.21...v1.2.22) (2020-12-07)
+
+
+### Bug Fixes
+
+* unload test ([92d0c17](https://github.com/Evomo/GameHubPlugin/commit/92d0c1734ea52bf04baa3ba2250358d7da932420))
+
 ## [1.2.21](https://github.com/Evomo/GameHubPlugin/compare/v1.2.20...v1.2.21) (2020-12-04)
 
 
