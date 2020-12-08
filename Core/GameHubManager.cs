@@ -79,18 +79,49 @@ namespace GamehubPlugin.Core {
                 }
             }
         }
-
-        IEnumerator UnloadGame() {
-            AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        
+        IEnumerator LoadMain(int sceneBuildNumber, GameHubGame game) {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneBuildNumber, LoadSceneMode.Additive);
             yield return new WaitUntil(() => asyncLoad.isDone);
 
+            _loadedScene = SceneManager.GetSceneByBuildIndex(sceneBuildNumber);
+            SceneManager.SetActiveScene(_loadedScene);
+            _overlay.ResetPanel(game);
+            loadedGame = game;
+            isGameRunning = true;
+            StartSessionWrapper();
+        }
+        
+        IEnumerator UnloadGame()
+        {
+            Scene activeScene = SceneManager.GetActiveScene();
+            
+            // destory game objects
+            foreach (GameObject o in activeScene.GetRootGameObjects()) {
+                if (!o.activeInHierarchy) {
+                    Destroy(o);
+                    Debug.Log($"Destroy {o.name}");
+                }
+            }
+            
+            Debug.Log($"GameHubManager: Get Active Scene {activeScene.name} {activeScene.buildIndex}");
+            AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(activeScene);
+            Debug.Log("GameHubManager: UnloadSceneAsync started");
+            Debug.Log($"GameHubManager: {asyncLoad.isDone.ToString()}");
+                
+            yield return new WaitUntil(() => asyncLoad.isDone);
+            
+            Debug.Log($"GameHubManager: isDOne {asyncLoad.isDone.ToString()} {asyncLoad.}");
+            
             isGameRunning = false;
             _hasNotifiedApp = false;
             loadedGame = null;
             m_CurrentManager = null;
-
+            Debug.Log("GameHubManager: Before Load Scene");
             _loadedScene = SceneManager.GetSceneByBuildIndex(0);
-            Application.Unload();
+            Debug.Log($"GameHubManager: Loaded Scene after Unload {_loadedScene.buildIndex}");
+            //Debug.Log($"GameHubManager: ApplicationUnload");
+            // Application.Unload();
 
         }
 
@@ -157,7 +188,8 @@ namespace GamehubPlugin.Core {
             if (isGameRunning) {
                 if (_loadedScene.buildIndex > 0) {
                     _currSess = null;
-                    CleanMainScene(); 
+                    // CleanMainScene();
+                    
                     StartCoroutine(UnloadGame());
                 }
             }
