@@ -81,17 +81,28 @@ namespace GamehubPlugin.Core {
         }
 
         IEnumerator UnloadGame() {
-            AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-            yield return new WaitUntil(() => asyncLoad.isDone);
+            Scene activeScene = SceneManager.GetActiveScene();
 
+            Debug.Log($"GameHubManager: Get Active Scene {activeScene.name} {activeScene.buildIndex}");
+            AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(activeScene);
+            
+            Debug.Log("GameHubManager: UnloadSceneAsync started");
+            Debug.Log($"GameHubManager: {asyncLoad.isDone.ToString()}");
+                
+            yield return new WaitUntil(() => asyncLoad.isDone);
+            
+            Debug.Log($"GameHubManager: isDOne {asyncLoad.isDone.ToString()}");
+            
             isGameRunning = false;
             _hasNotifiedApp = false;
             loadedGame = null;
             m_CurrentManager = null;
-
+            Debug.Log("GameHubManager: Before Load Scene");
             _loadedScene = SceneManager.GetSceneByBuildIndex(0);
+            Debug.Log("GameHubManager: Set Main Active");
+            SceneManager.SetActiveScene(_loadedScene);
+            Debug.Log("GameHubManager: Application Unload");
             Application.Unload();
-
         }
 
         IEnumerator ResetGameCoroutine() {
@@ -157,7 +168,7 @@ namespace GamehubPlugin.Core {
             if (isGameRunning) {
                 if (_loadedScene.buildIndex > 0) {
                     _currSess = null;
-                    CleanMainScene(); 
+                    // CleanMainScene(); 
                     StartCoroutine(UnloadGame());
                 }
             }
