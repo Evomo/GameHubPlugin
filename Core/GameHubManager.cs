@@ -81,28 +81,34 @@ namespace GamehubPlugin.Core {
         }
 
         IEnumerator UnloadGame() {
+            Debug.Log("GH-Unload");
             Scene activeScene = SceneManager.GetActiveScene();
 
             Debug.Log($"GameHubManager: Get Active Scene {activeScene.name} {activeScene.buildIndex}");
             AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(activeScene);
-            
             Debug.Log("GameHubManager: UnloadSceneAsync started");
-            Debug.Log($"GameHubManager: {asyncLoad.isDone.ToString()}");
-                
-            yield return new WaitUntil(() => asyncLoad.isDone);
             
+            if (asyncLoad != null)
+            {
+                yield return new WaitUntil(() => asyncLoad.isDone);
+            }
+            else
+            {
+                Debug.LogError("UnloadSceneAsync failed!");
+            }
+
             Debug.Log($"GameHubManager: isDOne {asyncLoad.isDone.ToString()}");
-            
+
             isGameRunning = false;
             _hasNotifiedApp = false;
             loadedGame = null;
-            m_CurrentManager = null;
+            //m_CurrentManager = null;
             Debug.Log("GameHubManager: Before Load Scene");
             _loadedScene = SceneManager.GetSceneByBuildIndex(0);
             Debug.Log("GameHubManager: Set Main Active");
             SceneManager.SetActiveScene(_loadedScene);
             Debug.Log("GameHubManager: Application Unload");
-            Application.Unload();
+            // Application.Unload();
         }
 
         IEnumerator ResetGameCoroutine() {
@@ -164,8 +170,9 @@ namespace GamehubPlugin.Core {
             return sceneName;
         }
 
-        private void QuitGame() {
+        private void QuitGameGH() {
             if (isGameRunning) {
+                Debug.Log("GH-Quit");
                 if (_loadedScene.buildIndex > 0) {
                     _currSess = null;
                     // CleanMainScene(); 
@@ -285,7 +292,8 @@ namespace GamehubPlugin.Core {
         /// Stops the game and returns to the main app
         /// </summary>
         public static void Quit() {
-            GameHubManager.Instance.QuitGame();
+            
+            GameHubManager.Instance.QuitGameGH();
         }
 
         /// <summary>
