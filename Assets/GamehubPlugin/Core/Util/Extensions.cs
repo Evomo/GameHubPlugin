@@ -14,7 +14,10 @@ namespace GamehubPlugin.Core.Util {
         public static void DestroyAll() {
             foreach (var go in _ddolObjects)
                 if (go != null)
+                {
                     UnityEngine.Object.Destroy(go);
+                    Debug.Log($"Destroy {go.name}");
+                }
 
             _ddolObjects.Clear();
         }
