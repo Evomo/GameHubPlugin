@@ -84,9 +84,7 @@ namespace GamehubPlugin.Core {
             Debug.Log("GH-Unload");
             Scene activeScene = SceneManager.GetActiveScene();
 
-            Debug.Log($"GameHubManager: Get Active Scene {activeScene.name} {activeScene.buildIndex}");
             AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(activeScene);
-            Debug.Log("GameHubManager: UnloadSceneAsync started");
             
             if (asyncLoad != null)
             {
@@ -96,19 +94,13 @@ namespace GamehubPlugin.Core {
             {
                 Debug.LogError("UnloadSceneAsync failed!");
             }
-
-            Debug.Log($"GameHubManager: isDOne {asyncLoad.isDone.ToString()}");
-
+            
             isGameRunning = false;
             _hasNotifiedApp = false;
             loadedGame = null;
-            //m_CurrentManager = null;
-            Debug.Log("GameHubManager: Before Load Scene");
+            m_CurrentManager = null;
             _loadedScene = SceneManager.GetSceneByBuildIndex(0);
-            Debug.Log("GameHubManager: Set Main Active");
             SceneManager.SetActiveScene(_loadedScene);
-            Debug.Log("GameHubManager: Application Unload");
-            // Application.Unload();
         }
 
         IEnumerator ResetGameCoroutine() {
