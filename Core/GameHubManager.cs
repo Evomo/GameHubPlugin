@@ -81,17 +81,26 @@ namespace GamehubPlugin.Core {
         }
 
         IEnumerator UnloadGame() {
-            AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-            yield return new WaitUntil(() => asyncLoad.isDone);
+            Debug.Log("GH-Unload");
+            Scene activeScene = SceneManager.GetActiveScene();
 
+            AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(activeScene);
+            
+            if (asyncLoad != null)
+            {
+                yield return new WaitUntil(() => asyncLoad.isDone);
+            }
+            else
+            {
+                Debug.LogError("UnloadSceneAsync failed!");
+            }
+            
             isGameRunning = false;
             _hasNotifiedApp = false;
             loadedGame = null;
             m_CurrentManager = null;
-
             _loadedScene = SceneManager.GetSceneByBuildIndex(0);
-            Application.Unload();
-
+            SceneManager.SetActiveScene(_loadedScene);
         }
 
         IEnumerator ResetGameCoroutine() {
@@ -153,11 +162,12 @@ namespace GamehubPlugin.Core {
             return sceneName;
         }
 
-        private void QuitGame() {
+        private void QuitGameGH() {
             if (isGameRunning) {
+                Debug.Log("GH-Quit");
                 if (_loadedScene.buildIndex > 0) {
                     _currSess = null;
-                    CleanMainScene(); 
+                    // CleanMainScene(); 
                     StartCoroutine(UnloadGame());
                 }
             }
@@ -274,7 +284,8 @@ namespace GamehubPlugin.Core {
         /// Stops the game and returns to the main app
         /// </summary>
         public static void Quit() {
-            GameHubManager.Instance.QuitGame();
+            
+            GameHubManager.Instance.QuitGameGH();
         }
 
         /// <summary>
