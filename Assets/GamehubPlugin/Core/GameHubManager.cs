@@ -187,7 +187,7 @@ namespace GamehubPlugin.Core {
         private void StartSessionWrapper() {
             if (loadedGame != null) {
                 if (_currSess != null) {
-                    Debug.LogError("End current session before starting a new one");
+                    Debug.LogError("GH-End current session before starting a new one");
                     return;
                 }
 
