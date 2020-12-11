@@ -16,8 +16,8 @@ namespace GamehubPlugin.Core {
         private bool _hasNotifiedApp;
 
         [SerializeField] private Overlay _overlay;
-        
-        [NonSerialized]private Session _currSess;
+
+        [NonSerialized] private Session _currSess;
         private Scene _loadedScene;
 
         [SerializeField] private Overlay overlayPrefab;
@@ -27,7 +27,10 @@ namespace GamehubPlugin.Core {
         public GameHubGame loadedGame;
 
         public bool isGameRunning { get; private set; }
-        public Overlay Overlay() { return _overlay; }
+
+        public Overlay Overlay() {
+            return _overlay;
+        }
 
         #region Unity Lifecycle
 
@@ -42,8 +45,7 @@ namespace GamehubPlugin.Core {
                 }
             }
 
-                
-            
+
             _overlay.events.onPause.AddListener((() => HandlePause(true)));
             _overlay.events.onResume.AddListener((() => HandlePause(false)));
 
@@ -85,16 +87,14 @@ namespace GamehubPlugin.Core {
             Scene activeScene = SceneManager.GetActiveScene();
 
             AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(activeScene);
-            
-            if (asyncLoad != null)
-            {
+
+            if (asyncLoad != null) {
                 yield return new WaitUntil(() => asyncLoad.isDone);
             }
-            else
-            {
+            else {
                 Debug.LogError("UnloadSceneAsync failed!");
             }
-            
+
             isGameRunning = false;
             _hasNotifiedApp = false;
             loadedGame = null;
@@ -136,7 +136,6 @@ namespace GamehubPlugin.Core {
 
         public void LoadSceneWrapped(GameHubGame game) {
             int sceneNum;
-
 #if UNITY_EDITOR
             sceneNum = BuildUtils.GetBuildScene(game.mainSceneReference.sceneAsset).buildIndex;
             if (sceneNum < 0) {
@@ -150,29 +149,24 @@ namespace GamehubPlugin.Core {
 #endif
 
             if (_loadedScene.buildIndex <= 0) {
+                GhHelpers.Log($"Loading scene for {game.gameName}");
                 StartCoroutine(LoadGame(sceneNum, game));
                 _overlay.events.onPause.Invoke();
             }
         }
 
-        public static string GetSceneNameFromBuildIndex(int index) {
-            string scenePath = SceneUtility.GetScenePathByBuildIndex(index);
-            string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
-
-            return sceneName;
-        }
 
         private void QuitGameGH() {
             if (isGameRunning) {
-                Debug.Log("GH-Quit");
+                GhHelpers.Log("GH-Quit");
                 if (_loadedScene.buildIndex > 0) {
                     _currSess = null;
-                    // CleanMainScene(); 
+                    CleanMainScene();
                     StartCoroutine(UnloadGame());
                 }
             }
             else {
-                Debug.Log("Would now return to Gamehub ");
+                GhHelpers.Log("Would now return to Gamehub ");
             }
         }
 
@@ -181,15 +175,21 @@ namespace GamehubPlugin.Core {
                 EndSessionWrapped();
                 StartCoroutine(ResetGameCoroutine());
                 CleanMainScene();
+                GhHelpers.Log("Scene REset ");
+
             }
         }
 
         private void StartSessionWrapper() {
+            GhHelpers.Log("Starting session");
+
             if (loadedGame != null) {
                 if (_currSess != null) {
-                    Debug.LogError("GH-End current session before starting a new one");
+                    GhHelpers.Log("End current session before starting a new one");
                     return;
                 }
+
+                GhHelpers.Log("Searching for MotionAIManagers");
 
                 m_CurrentManager = FindObjectOfType<MotionAIManager>();
                 if (m_CurrentManager != null) {
@@ -204,14 +204,17 @@ namespace GamehubPlugin.Core {
                     }
 
                     if (_overlay != null) {
+
                         _overlay.UpdateManager(m_CurrentManager);
                     }
+
+                    GhHelpers.Log("Adding session movement listeners");
 
                     m_CurrentManager.controllerManager.onMovement.AddListener(SessionRecordCallback);
                 }
             }
             else {
-                Debug.LogError("No MotionAIManager present in scene ");
+                GhHelpers.Log("MotionAIManager not found");
             }
         }
 
@@ -253,7 +256,6 @@ namespace GamehubPlugin.Core {
                     _overlay.Resume();
                 }
             }
-
         }
 
         #endregion
@@ -284,7 +286,6 @@ namespace GamehubPlugin.Core {
         /// Stops the game and returns to the main app
         /// </summary>
         public static void Quit() {
-            
             GameHubManager.Instance.QuitGameGH();
         }
 
