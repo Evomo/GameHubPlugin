@@ -1,3 +1,10 @@
+## [1.2.25](https://github.com/Evomo/GameHubPlugin/compare/v1.2.24...v1.2.25) (2020-12-11)
+
+
+### Bug Fixes
+
+* tracking test ([a52aea4](https://github.com/Evomo/GameHubPlugin/commit/a52aea499bc690c7a5d1621ef77c116cf26382a4))
+
 ## [1.2.24](https://github.com/Evomo/GameHubPlugin/compare/v1.2.23...v1.2.24) (2020-12-11)
 
 
