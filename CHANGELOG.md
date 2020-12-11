@@ -1,3 +1,10 @@
+## [1.2.24](https://github.com/Evomo/GameHubPlugin/compare/v1.2.23...v1.2.24) (2020-12-11)
+
+
+### Bug Fixes
+
+* log prefix ([0302894](https://github.com/Evomo/GameHubPlugin/commit/030289439e3419b007b415c9561349586ac5aaab))
+
 ## [1.2.23](https://github.com/Evomo/GameHubPlugin/compare/v1.2.22...v1.2.23) (2020-12-11)
 
 
