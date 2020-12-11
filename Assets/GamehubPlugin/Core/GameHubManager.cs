@@ -246,13 +246,15 @@ namespace GamehubPlugin.Core {
 
 
         public void HandlePause(bool shouldPause) {
-            if (_overlay != null) {
+            if (_overlay != null && m_CurrentManager != null) {
                 _currSess?.TogglePause(shouldPause);
                 if (shouldPause) {
+                    m_CurrentManager.StopTracking();
                     _overlay.Pause();
                     SendCurrentSession();
                 }
                 else {
+                    m_CurrentManager.StartTracking();
                     _overlay.Resume();
                 }
             }
