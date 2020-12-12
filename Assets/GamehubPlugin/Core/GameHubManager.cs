@@ -175,7 +175,8 @@ namespace GamehubPlugin.Core {
                 EndSessionWrapped();
                 StartCoroutine(ResetGameCoroutine());
                 CleanMainScene();
-                GhHelpers.Log("Scene REset ");
+                m_CurrentManager.isTracking = true;
+                GhHelpers.Log("Scene Reset ");
 
             }
         }
@@ -202,12 +203,7 @@ namespace GamehubPlugin.Core {
                         m_CurrentManager.SendGameHubMessage(cm.ToString());
                         _hasNotifiedApp = true;
                     }
-
-                    if (_overlay != null) {
-
-                        _overlay.UpdateManager(m_CurrentManager);
-                    }
-
+                    
                     GhHelpers.Log("Adding session movement listeners");
 
                     m_CurrentManager.controllerManager.onMovement.AddListener(SessionRecordCallback);
@@ -249,10 +245,14 @@ namespace GamehubPlugin.Core {
             if (_overlay != null) {
                 _currSess?.TogglePause(shouldPause);
                 if (shouldPause) {
+                    // m_CurrentManager.StopTracking();
+                    if (m_CurrentManager != null) m_CurrentManager.isTracking = false;
                     _overlay.Pause();
                     SendCurrentSession();
                 }
                 else {
+                    // m_CurrentManager.StartTracking();
+                    if (m_CurrentManager != null) m_CurrentManager.isTracking = true;
                     _overlay.Resume();
                 }
             }
