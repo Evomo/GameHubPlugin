@@ -1,3 +1,10 @@
+## [1.2.26](https://github.com/Evomo/GameHubPlugin/compare/v1.2.25...v1.2.26) (2020-12-12)
+
+
+### Bug Fixes
+
+* isTracking property handling ([fc24935](https://github.com/Evomo/GameHubPlugin/commit/fc24935d6e2e0c5ae8af0726352fee33fe3d42aa))
+
 ## [1.2.25](https://github.com/Evomo/GameHubPlugin/compare/v1.2.24...v1.2.25) (2020-12-11)
 
 
