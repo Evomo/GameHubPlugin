@@ -59,6 +59,7 @@ namespace GamehubPlugin.Core {
         #region Scene Loading
 
         IEnumerator LoadGame(int sceneBuildNumber, GameHubGame game) {
+            GhHelpers.Log($"Load Game {game.gameName}");
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneBuildNumber, LoadSceneMode.Additive);
             yield return new WaitUntil(() => asyncLoad.isDone);
 
@@ -77,13 +78,13 @@ namespace GamehubPlugin.Core {
             foreach (GameObject o in SceneManager.GetSceneByBuildIndex(0).GetRootGameObjects()) {
                 if (!o.activeInHierarchy) {
                     Destroy(o);
-                    Debug.Log($"Deleting {o.name}");
+                    GhHelpers.Log($"Deleting {o.name}");
                 }
             }
         }
 
         IEnumerator UnloadGame() {
-            Debug.Log("GH-Unload");
+            GhHelpers.Log("GH-Unload");
             Scene activeScene = SceneManager.GetActiveScene();
 
             AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(activeScene);
@@ -242,7 +243,7 @@ namespace GamehubPlugin.Core {
 
 
         public void HandlePause(bool shouldPause) {
-            if (_overlay != null && m_CurrentManager != null) {
+            if (_overlay != null) {
                 _currSess?.TogglePause(shouldPause);
                 if (shouldPause) {
                     // m_CurrentManager.StopTracking();

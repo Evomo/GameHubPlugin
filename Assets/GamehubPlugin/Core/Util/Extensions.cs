@@ -16,7 +16,7 @@ namespace GamehubPlugin.Core.Util {
                 if (go != null)
                 {
                     UnityEngine.Object.Destroy(go);
-                    Debug.Log($"Destroy {go.name}");
+                    GhHelpers.Log($"Destroy {go.name}");
                 }
 
             _ddolObjects.Clear();
