@@ -1,3 +1,10 @@
+## [1.2.28](https://github.com/Evomo/GameHubPlugin/compare/v1.2.27...v1.2.28) (2020-12-12)
+
+
+### Bug Fixes
+
+* start tutorial ([6dac63f](https://github.com/Evomo/GameHubPlugin/commit/6dac63fcbbfdc72a198881577ecc1de62d7acfce))
+
 ## [1.2.27](https://github.com/Evomo/GameHubPlugin/compare/v1.2.26...v1.2.27) (2020-12-12)
 
 
