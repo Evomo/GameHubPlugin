@@ -171,13 +171,14 @@ namespace GamehubPlugin.Core {
             }
         }
 
-        private void ResetScene() {
+        private void ResetScene(bool tutorial = false) {
             if (_loadedScene.buildIndex > 0) {
-                EndSessionWrapped();
+                // Dont send gameOver message on tutorial restart
+                EndSessionWrapped(sendMessage: !tutorial);
                 StartCoroutine(ResetGameCoroutine());
                 CleanMainScene();
                 m_CurrentManager.isTracking = true;
-                GhHelpers.Log("Scene Reset ");
+                GhHelpers.Log("Scene Reset");
 
             }
         }
@@ -233,8 +234,8 @@ namespace GamehubPlugin.Core {
             EndSessionWrapped();
         }
 
-        private void EndSessionWrapped() {
-            if (_currSess != null) {
+        private void EndSessionWrapped(bool sendMessage = true) {
+            if (_currSess != null && sendMessage) {
                 SendCurrentSession(gameOver: true);
             }
 
@@ -266,8 +267,8 @@ namespace GamehubPlugin.Core {
         /// <summary>
         /// Function to restart the game, the game scene is reloaded and can only be used when a session has been ended
         /// </summary>
-        public static void ResetGame() {
-            GameHubManager.Instance.ResetScene();
+        public static void ResetGame(bool tutorial = false) {
+            GameHubManager.Instance.ResetScene(tutorial: tutorial);
         }
 
 
