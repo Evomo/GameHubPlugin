@@ -203,7 +203,7 @@ namespace GamehubPlugin.Core {
                         m_CurrentManager.SendGameHubMessage(cm.ToString());
                         _hasNotifiedApp = true;
                     }
-                    
+
                     GhHelpers.Log("Adding session movement listeners");
 
                     m_CurrentManager.controllerManager.onMovement.AddListener(SessionRecordCallback);
@@ -242,7 +242,7 @@ namespace GamehubPlugin.Core {
 
 
         public void HandlePause(bool shouldPause) {
-            if (_overlay != null) {
+            if (_overlay != null && m_CurrentManager != null) {
                 _currSess?.TogglePause(shouldPause);
                 if (shouldPause) {
                     // m_CurrentManager.StopTracking();
@@ -326,15 +326,15 @@ namespace GamehubPlugin.Core {
 
 
         /// <summary>
-        /// Pauses the game and sends a message to the gamehub main app 
-        /// </summary> 
+        /// Pauses the game and sends a message to the gamehub main app
+        /// </summary>
         public static void Pause() {
             GameHubManager.Instance.HandlePause(true);
         }
 
 
         /// <summary>
-        /// Resumes the game and sets the time scale back to normal 
+        /// Resumes the game and sets the time scale back to normal
         /// </summary>
         public static void Resume() {
             GameHubManager.Instance.HandlePause(false);

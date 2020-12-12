@@ -28,7 +28,7 @@ namespace GamehubPlugin.Core {
         [SerializeField] private OverlayPanel vertical, horizontal;
         [SerializeField] public OverlayEvents events;
         [SerializeField] private bool _isPaused;
-        
+
         public OverlayPanel activePanel;
 
         private bool _isPanelActive;
@@ -76,7 +76,7 @@ namespace GamehubPlugin.Core {
             _isPanelActive = game.overlayOptions.usedPanels != 0;
             activePanel.gameObject.SetActive(true);
         }
-        
+
         public void UpdatePanelValue<T>(OverlayPanelEnum toChange, T value) {
             if (activePanel != null) {
                 using (var sb = ZString.CreateStringBuilder()) {
@@ -103,7 +103,7 @@ namespace GamehubPlugin.Core {
             else {
                 events.onPause.Invoke();
             }
-            
+
         }
         public void Resume() {
             AudioListener.pause = false;
