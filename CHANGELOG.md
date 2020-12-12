@@ -1,3 +1,10 @@
+## [1.2.27](https://github.com/Evomo/GameHubPlugin/compare/v1.2.26...v1.2.27) (2020-12-12)
+
+
+### Bug Fixes
+
+* handle pause, extend Logs ([c1dd3e7](https://github.com/Evomo/GameHubPlugin/commit/c1dd3e723399d9bd8bcc321619535c37367d16cc))
+
 ## [1.2.26](https://github.com/Evomo/GameHubPlugin/compare/v1.2.25...v1.2.26) (2020-12-12)
 
 
