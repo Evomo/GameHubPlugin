@@ -1,3 +1,31 @@
+## [1.2.28](https://github.com/Evomo/GameHubPlugin/compare/v1.2.27...v1.2.28) (2020-12-12)
+
+
+### Bug Fixes
+
+* start tutorial ([6dac63f](https://github.com/Evomo/GameHubPlugin/commit/6dac63fcbbfdc72a198881577ecc1de62d7acfce))
+
+## [1.2.27](https://github.com/Evomo/GameHubPlugin/compare/v1.2.26...v1.2.27) (2020-12-12)
+
+
+### Bug Fixes
+
+* handle pause, extend Logs ([c1dd3e7](https://github.com/Evomo/GameHubPlugin/commit/c1dd3e723399d9bd8bcc321619535c37367d16cc))
+
+## [1.2.26](https://github.com/Evomo/GameHubPlugin/compare/v1.2.25...v1.2.26) (2020-12-12)
+
+
+### Bug Fixes
+
+* isTracking property handling ([fc24935](https://github.com/Evomo/GameHubPlugin/commit/fc24935d6e2e0c5ae8af0726352fee33fe3d42aa))
+
+## [1.2.25](https://github.com/Evomo/GameHubPlugin/compare/v1.2.24...v1.2.25) (2020-12-11)
+
+
+### Bug Fixes
+
+* tracking test ([a52aea4](https://github.com/Evomo/GameHubPlugin/commit/a52aea499bc690c7a5d1621ef77c116cf26382a4))
+
 ## [1.2.24](https://github.com/Evomo/GameHubPlugin/compare/v1.2.23...v1.2.24) (2020-12-11)
 
 

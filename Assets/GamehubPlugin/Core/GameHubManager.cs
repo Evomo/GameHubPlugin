@@ -59,6 +59,7 @@ namespace GamehubPlugin.Core {
         #region Scene Loading
 
         IEnumerator LoadGame(int sceneBuildNumber, GameHubGame game) {
+            GhHelpers.Log($"Load Game {game.gameName}");
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneBuildNumber, LoadSceneMode.Additive);
             yield return new WaitUntil(() => asyncLoad.isDone);
 
@@ -77,12 +78,13 @@ namespace GamehubPlugin.Core {
             foreach (GameObject o in SceneManager.GetSceneByBuildIndex(0).GetRootGameObjects()) {
                 if (!o.activeInHierarchy) {
                     Destroy(o);
-                    Debug.Log($"Deleting {o.name}");
+                    GhHelpers.Log($"Deleting {o.name}");
                 }
             }
         }
 
         IEnumerator UnloadGame() {
+
             Scene activeScene = SceneManager.GetActiveScene();
 
             AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(activeScene);
@@ -169,12 +171,14 @@ namespace GamehubPlugin.Core {
             }
         }
 
-        private void ResetScene() {
+        private void ResetScene(bool tutorial = false) {
             if (_loadedScene.buildIndex > 0) {
-                EndSessionWrapped();
+                // Dont send gameOver message on tutorial restart
+                EndSessionWrapped(sendMessage: !tutorial);
                 StartCoroutine(ResetGameCoroutine());
                 CleanMainScene();
-                GhHelpers.Log("Scene REset ");
+                m_CurrentManager.isTracking = true;
+                GhHelpers.Log("Scene Reset");
 
             }
         }
@@ -200,11 +204,6 @@ namespace GamehubPlugin.Core {
                         cm.messageType = CommunicationMessageType.GAMELOADED;
                         m_CurrentManager.SendGameHubMessage(cm.ToString());
                         _hasNotifiedApp = true;
-                    }
-
-                    if (_overlay != null) {
-
-                        _overlay.UpdateManager(m_CurrentManager);
                     }
 
                     GhHelpers.Log("Adding session movement listeners");
@@ -237,8 +236,8 @@ namespace GamehubPlugin.Core {
             EndSessionWrapped();
         }
 
-        private void EndSessionWrapped() {
-            if (_currSess != null) {
+        private void EndSessionWrapped(bool sendMessage = true) {
+            if (_currSess != null && sendMessage) {
                 SendCurrentSession(gameOver: true);
             }
 
@@ -247,15 +246,17 @@ namespace GamehubPlugin.Core {
 
 
         public void HandlePause(bool shouldPause) {
-            if (_overlay != null && m_CurrentManager != null) {
+            if (_overlay != null) {
                 _currSess?.TogglePause(shouldPause);
                 if (shouldPause) {
-                    m_CurrentManager.StopTracking();
+                    // m_CurrentManager.StopTracking();
+                    if (m_CurrentManager != null) m_CurrentManager.isTracking = false;
                     _overlay.Pause();
                     SendCurrentSession();
                 }
                 else {
-                    m_CurrentManager.StartTracking();
+                    // m_CurrentManager.StartTracking();
+                    if (m_CurrentManager != null) m_CurrentManager.isTracking = true;
                     _overlay.Resume();
                 }
             }
@@ -268,8 +269,8 @@ namespace GamehubPlugin.Core {
         /// <summary>
         /// Function to restart the game, the game scene is reloaded and can only be used when a session has been ended
         /// </summary>
-        public static void ResetGame() {
-            GameHubManager.Instance.ResetScene();
+        public static void ResetGame(bool tutorial = false) {
+            GameHubManager.Instance.ResetScene(tutorial: tutorial);
         }
 
 
@@ -329,15 +330,15 @@ namespace GamehubPlugin.Core {
 
 
         /// <summary>
-        /// Pauses the game and sends a message to the gamehub main app 
-        /// </summary> 
+        /// Pauses the game and sends a message to the gamehub main app
+        /// </summary>
         public static void Pause() {
             GameHubManager.Instance.HandlePause(true);
         }
 
 
         /// <summary>
-        /// Resumes the game and sets the time scale back to normal 
+        /// Resumes the game and sets the time scale back to normal
         /// </summary>
         public static void Resume() {
             GameHubManager.Instance.HandlePause(false);
