@@ -1,3 +1,10 @@
+## [1.2.29](https://github.com/Evomo/GameHubPlugin/compare/v1.2.28...v1.2.29) (2021-01-06)
+
+
+### Bug Fixes
+
+* use new movement track ([3db7b94](https://github.com/Evomo/GameHubPlugin/commit/3db7b94f67d17f7b5d4b54bcccca3a95fc1e7d21))
+
 ## [1.2.28](https://github.com/Evomo/GameHubPlugin/compare/v1.2.27...v1.2.28) (2020-12-12)
 
 
