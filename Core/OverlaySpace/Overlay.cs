@@ -29,8 +29,6 @@ namespace GamehubPlugin.Core {
         [SerializeField] public OverlayEvents events;
         [SerializeField] private bool _isPaused;
 
-        private MotionAIManager m_Manager;
-
         public OverlayPanel activePanel;
 
         private bool _isPanelActive;
@@ -79,13 +77,6 @@ namespace GamehubPlugin.Core {
             activePanel.gameObject.SetActive(true);
         }
 
-        public void UpdateManager(MotionAIManager manager) {
-            m_Manager = manager;
-        }
-
-
-
-
         public void UpdatePanelValue<T>(OverlayPanelEnum toChange, T value) {
             if (activePanel != null) {
                 using (var sb = ZString.CreateStringBuilder()) {
@@ -106,17 +97,13 @@ namespace GamehubPlugin.Core {
         }
 
         public void TogglePause() {
-            // if (m_Manager != null) {
-            //     m_Manager.isTracking = !IsPaused;
-            // }
-            
             if (IsPaused) {
                 events.onResume.Invoke();
             }
             else {
                 events.onPause.Invoke();
             }
-            
+
         }
         public void Resume() {
             AudioListener.pause = false;
