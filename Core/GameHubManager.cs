@@ -83,7 +83,6 @@ namespace GamehubPlugin.Core {
         }
 
         IEnumerator UnloadGame() {
-            Debug.Log("GH-Unload");
             Scene activeScene = SceneManager.GetActiveScene();
 
             AsyncOperation asyncLoad = SceneManager.UnloadSceneAsync(activeScene);
@@ -210,7 +209,9 @@ namespace GamehubPlugin.Core {
 
                     GhHelpers.Log("Adding session movement listeners");
 
-                    m_CurrentManager.controllerManager.onMovement.AddListener(SessionRecordCallback);
+                    foreach (MotionAIController maic in m_CurrentManager.controllerManager.PairedControllers) {
+                        maic.onEvoMovement.AddListener(SessionRecordCallback);
+                    }
                 }
             }
             else {
