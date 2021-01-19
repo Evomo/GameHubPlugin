@@ -1,3 +1,10 @@
+## [1.2.30](https://github.com/Evomo/GameHubPlugin/compare/v1.2.29...v1.2.30) (2021-01-19)
+
+
+### Bug Fixes
+
+* added Horizontal_panel.png ([f2f298a](https://github.com/Evomo/GameHubPlugin/commit/f2f298a2399ff00bdf79eb2720a18e3437b92ebb))
+
 ## [1.2.29](https://github.com/Evomo/GameHubPlugin/compare/v1.2.28...v1.2.29) (2021-01-06)
 
 
