@@ -1,3 +1,10 @@
+## [1.2.31](https://github.com/Evomo/GameHubPlugin/compare/v1.2.30...v1.2.31) (2021-02-02)
+
+
+### Bug Fixes
+
+* add SafeArea to Overlay. ([6f6bc95](https://github.com/Evomo/GameHubPlugin/commit/6f6bc95e72b24999539e27e17b09d64b1dda565c))
+
 ## [1.2.30](https://github.com/Evomo/GameHubPlugin/compare/v1.2.29...v1.2.30) (2021-01-19)
 
 
