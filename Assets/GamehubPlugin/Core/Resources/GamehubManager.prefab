@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6123426641575117402}
   - component: {fileID: 941242083144336602}
   m_Layer: 0
-  m_Name: GameHubManager
+  m_Name: GamehubManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -200,6 +200,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5291612110073674247, guid: 0c8127a9b8a10334483686ef0dd77738,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6426023381080826186, guid: 0c8127a9b8a10334483686ef0dd77738,
         type: 3}

@@ -15,7 +15,7 @@
       "hash": "c5140c7dc38427f93a63d8bd6604f90134943fe7"
     },
     "com.evomo.motionai": {
-      "version": "1.2.19",
+      "version": "1.2.27",
       "depth": 0,
       "source": "registry",
       "dependencies": {
