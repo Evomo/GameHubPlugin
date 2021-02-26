@@ -1,3 +1,10 @@
+## [1.2.32](https://github.com/Evomo/GameHubPlugin/compare/v1.2.31...v1.2.32) (2021-02-26)
+
+
+### Bug Fixes
+
+* revert movement track ([ce2fb45](https://github.com/Evomo/GameHubPlugin/commit/ce2fb45ceb0b9a205114ee160af2c8b6ef4a5d3a))
+
 ## [1.2.31](https://github.com/Evomo/GameHubPlugin/compare/v1.2.30...v1.2.31) (2021-02-02)
 
 
