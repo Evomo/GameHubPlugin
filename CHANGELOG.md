@@ -1,3 +1,10 @@
+## [1.2.33](https://github.com/Evomo/GameHubPlugin/compare/v1.2.32...v1.2.33) (2021-02-27)
+
+
+### Bug Fixes
+
+* Overlay slime game ([3505d43](https://github.com/Evomo/GameHubPlugin/commit/3505d43ed6ddbbe35f89834c4131c21132a573d6))
+
 ## [1.2.32](https://github.com/Evomo/GameHubPlugin/compare/v1.2.31...v1.2.32) (2021-02-26)
 
 
