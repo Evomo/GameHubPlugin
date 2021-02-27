@@ -75,6 +75,18 @@ namespace GamehubPlugin.Core {
             activePanel = game.overlayOptions.menuType == DeviceOrientation.Horizontal ? horizontal : vertical;
             _isPanelActive = game.overlayOptions.usedPanels != 0;
             activePanel.gameObject.SetActive(true);
+            
+            // Jakob hdl fix
+            if (game.overlayOptions.menuType == DeviceOrientation.Vertical && game.name == "Slime Game")
+            {
+                // hide lives panel
+                activePanel.livePanel.SetActive(false);
+            }
+            else
+            {
+                // show lives panel
+                activePanel.livePanel.SetActive(true);
+            }
         }
 
         public void UpdatePanelValue<T>(OverlayPanelEnum toChange, T value) {
