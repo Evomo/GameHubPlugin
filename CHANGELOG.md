@@ -1,3 +1,17 @@
+## [1.2.33](https://github.com/Evomo/GameHubPlugin/compare/v1.2.32...v1.2.33) (2021-02-27)
+
+
+### Bug Fixes
+
+* Overlay slime game ([3505d43](https://github.com/Evomo/GameHubPlugin/commit/3505d43ed6ddbbe35f89834c4131c21132a573d6))
+
+## [1.2.32](https://github.com/Evomo/GameHubPlugin/compare/v1.2.31...v1.2.32) (2021-02-26)
+
+
+### Bug Fixes
+
+* revert movement track ([ce2fb45](https://github.com/Evomo/GameHubPlugin/commit/ce2fb45ceb0b9a205114ee160af2c8b6ef4a5d3a))
+
 ## [1.2.31](https://github.com/Evomo/GameHubPlugin/compare/v1.2.30...v1.2.31) (2021-02-02)
 
 

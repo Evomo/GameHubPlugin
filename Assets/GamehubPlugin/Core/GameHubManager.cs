@@ -207,10 +207,13 @@ namespace GamehubPlugin.Core {
                     }
 
                     GhHelpers.Log("Adding session movement listeners");
-
-                    foreach (MotionAIController maic in m_CurrentManager.controllerManager.PairedControllers) {
-                        maic.onEvoMovement.AddListener(SessionRecordCallback);
-                    }
+                    
+                    m_CurrentManager.controllerManager.onMovement.AddListener(SessionRecordCallback);
+                    
+                    // revert movement track
+                    //foreach (MotionAIController maic in m_CurrentManager.controllerManager.PairedControllers) {
+                    //    maic.onEvoMovement.AddListener(SessionRecordCallback);
+                    //}
                 }
             }
             else {
